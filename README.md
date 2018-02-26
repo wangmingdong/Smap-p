@@ -1,6 +1,6 @@
-# vueAdmin-template
+# Smap-p
 
-> A minimal vue admin template with Element UI & axios & iconfont & permission control & lint
+> smap-p平台
 
 ## Build Setup
 
