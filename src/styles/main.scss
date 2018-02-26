@@ -1,0 +1,20 @@
+.table-header-container {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  .table-search-container {
+    display: flex;
+  }
+  .table-btn-group {
+  }
+}
+.form-container {
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+}
+.table-pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px;
+}

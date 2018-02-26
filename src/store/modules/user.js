@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/login'
+import { login, logout, getInfo, getModuleAuthority } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 // import request from '@/utils/request'
 // import axios from 'axios'
@@ -9,7 +9,9 @@ const user = {
     name: '',
     avatar: '',
     roles: [],
-    authority: null
+    authority: null,
+    userId: null,
+    moduleOpts: ''
   },
 
   mutations: {
@@ -27,6 +29,12 @@ const user = {
     },
     SET_AUTHORITY: (state, authority) => {
       state.authority = authority
+    },
+    SET_USER_ID: (state, userId) => {
+      state.userId = userId
+    },
+    SET_MODULE_OPTS: (state, moduleOpts) => {
+      state.moduleOpts = moduleOpts
     }
   },
 
@@ -53,6 +61,11 @@ const user = {
           const data = response.data
           setToken(data.token)
           commit('SET_TOKEN', data.token)
+          commit('SET_AUTHORITY', data.pmModules)
+          commit('SET_NAME', data.loginNo)
+          commit('SET_USER_ID', data.userId)
+          // 头像默认
+          commit('SET_AVATAR', './src/assets/avatar.gif')
           resolve()
         }).catch(error => {
           reject(error)
@@ -67,9 +80,23 @@ const user = {
           const data = response.data
           commit('SET_AUTHORITY', data.pmModules)
           commit('SET_NAME', data.loginNo)
+          commit('SET_USER_ID', data.userId)
           // 头像默认
           commit('SET_AVATAR', './src/assets/avatar.gif')
           resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 按钮权限
+    GetModuleAuthority({ commit, state }, id) {
+      return new Promise((resolve, reject) => {
+        getModuleAuthority(state.userId, id).then(response => {
+          const data = response.data
+          commit('SET_MODULE_OPTS', data.moduleOpts)
+          resolve()
         }).catch(error => {
           reject(error)
         })

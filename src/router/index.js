@@ -27,7 +27,7 @@ export const constantRouterMap = [{
   path: '/permission',
   component: Layout,
   redirect: '/permission/index',
-  meta: { roles: ['admin'], visible: true }, // you can set roles in root nav
+  meta: { roles: ['admin'], visible: true, moduleId: 0 }, // you can set roles in root nav
   children: [{
     path: 'index',
     // component: _import('permission/index'),
@@ -74,20 +74,20 @@ export const constantRouterMap = [{
   component: Layout,
   redirect: '/example/table',
   name: 'Example',
-  meta: { title: 'Example', icon: 'example', visible: true },
+  meta: { title: 'Example', icon: 'example', visible: true, moduleId: 0 },
   children: [{
     path: 'table',
     name: 'Table',
     component: () =>
                     import('@/views/table/index'),
-    meta: { title: 'Table', icon: 'table', visible: true }
+    meta: { title: 'Table', icon: 'table', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'Tree',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: 'Tree', icon: 'tree', visible: true }
+    meta: { title: 'Tree', icon: 'tree', visible: true, moduleId: 0 }
   }
   ]
 },
@@ -100,8 +100,53 @@ export const constantRouterMap = [{
     name: 'Form',
     component: () =>
                 import('@/views/form/index'),
-    meta: { title: 'Form', icon: 'form', visible: true }
+    meta: { title: 'Form', icon: 'form', visible: true, moduleId: 0 }
   }]
+},
+// 客户权限
+{
+  path: '/custom',
+  component: Layout,
+  redirect: '/custom/user',
+  name: 'CustomAuthority',
+  isMain: true,
+  meta: { title: '客户权限', icon: 'example', visible: true },
+  children: [{
+    path: 'user',
+    name: 'UserManage',
+    component: () =>
+                  import('@/views/custom/user'),
+    meta: { title: '用户管理', icon: 'table', visible: true, moduleId: 0 }
+  },
+  {
+    path: 'role',
+    name: 'RoleManage',
+    component: () =>
+                  import('@/views/custom/role'),
+    meta: { title: '角色管理', icon: 'tree', visible: true, moduleId: 0 }
+  },
+  {
+    path: 'tree',
+    name: 'FusionFailure',
+    component: () =>
+                  import('@/views/tree/index'),
+    meta: { title: '融合失败', icon: 'tree', visible: true, moduleId: 0 }
+  },
+  {
+    path: 'tree',
+    name: 'IdbTotal',
+    component: () =>
+                  import('@/views/tree/index'),
+    meta: { title: 'idb统计', icon: 'tree', visible: true, moduleId: 0 }
+  },
+  {
+    path: 'tree',
+    name: 'MifgTotal',
+    component: () =>
+                  import('@/views/tree/index'),
+    meta: { title: 'mifg统计', icon: 'tree', visible: true, moduleId: 0 }
+  }
+  ]
 },
   // 产品管理
 {
@@ -109,64 +154,21 @@ export const constantRouterMap = [{
   component: Layout,
   redirect: '/example/table',
   name: 'ProductManage',
+  isMain: true,
   meta: { title: '产品管理', icon: 'example', visible: true },
   children: [{
     path: 'table',
     name: 'ProductMaintain',
     component: () =>
                     import('@/views/table/index'),
-    meta: { title: '产品维护', icon: 'table', visible: true }
+    meta: { title: '产品维护', icon: 'table', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'CurrentControl',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '限流控制', icon: 'tree', visible: true }
-  }
-  ]
-},
-  // 客户权限
-{
-  path: '/example',
-  component: Layout,
-  redirect: '/example/table',
-  name: 'CustomAuthority',
-  meta: { title: '客户权限', icon: 'example', visible: true },
-  children: [{
-    path: 'table',
-    name: 'UserManage',
-    component: () =>
-                    import('@/views/table/index'),
-    meta: { title: '用户管理', icon: 'table', visible: true }
-  },
-  {
-    path: 'tree',
-    name: 'RoleManage',
-    component: () =>
-                    import('@/views/tree/index'),
-    meta: { title: '角色管理', icon: 'tree', visible: true }
-  },
-  {
-    path: 'tree',
-    name: 'FusionFailure',
-    component: () =>
-                    import('@/views/tree/index'),
-    meta: { title: '融合失败', icon: 'tree', visible: true }
-  },
-  {
-    path: 'tree',
-    name: 'IdbTotal',
-    component: () =>
-                    import('@/views/tree/index'),
-    meta: { title: 'idb统计', icon: 'tree', visible: true }
-  },
-  {
-    path: 'tree',
-    name: 'MifgTotal',
-    component: () =>
-                    import('@/views/tree/index'),
-    meta: { title: 'mifg统计', icon: 'tree', visible: true }
+    meta: { title: '限流控制', icon: 'tree', visible: true, moduleId: 0 }
   }
   ]
 },
@@ -176,27 +178,28 @@ export const constantRouterMap = [{
   component: Layout,
   redirect: '/example/table',
   name: 'DataManage',
+  isMain: true,
   meta: { title: '数据管理', icon: 'example', visible: true },
   children: [{
     path: 'table',
     name: 'DayProduce',
     component: () =>
                     import('@/views/table/index'),
-    meta: { title: '日出品', icon: 'table', visible: true }
+    meta: { title: '日出品', icon: 'table', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'NormalProduct',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '常规产品', icon: 'tree', visible: true }
+    meta: { title: '常规产品', icon: 'tree', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'RoadConstruction',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '施工道路', icon: 'tree', visible: true }
+    meta: { title: '施工道路', icon: 'tree', visible: true, moduleId: 0 }
   }
   ]
 },
@@ -206,20 +209,21 @@ export const constantRouterMap = [{
   component: Layout,
   redirect: '/example/table',
   name: 'QueryTotal',
+  isMain: true,
   meta: { title: '查询统计', icon: 'example', visible: true },
   children: [{
     path: 'table',
     name: 'QDayProduce',
     component: () =>
                     import('@/views/table/index'),
-    meta: { title: '日出品', icon: 'table', visible: true }
+    meta: { title: '日出品', icon: 'table', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'QLimitNum',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '限行限号', icon: 'tree', visible: true }
+    meta: { title: '限行限号', icon: 'tree', visible: true, moduleId: 0 }
   }
   ]
 },
@@ -229,34 +233,35 @@ export const constantRouterMap = [{
   component: Layout,
   redirect: '/example/table',
   name: 'SystemAuthority',
+  isMain: true,
   meta: { title: '系统权限', icon: 'example', visible: true },
   children: [{
     path: 'table',
     name: 'SystemUser',
     component: () =>
                     import('@/views/table/index'),
-    meta: { title: '系统用户', icon: 'table', visible: true }
+    meta: { title: '系统用户', icon: 'table', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'RoleAuthor',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '角色权限', icon: 'tree', visible: true }
+    meta: { title: '角色权限', icon: 'tree', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'UserProduct',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '用户产品', icon: 'tree', visible: true }
+    meta: { title: '用户产品', icon: 'tree', visible: true, moduleId: 0 }
   },
   {
     path: 'trees',
     name: 'ModelConfigure',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '模块配置', icon: 'tree', visible: true }
+    meta: { title: '模块配置', icon: 'tree', visible: true, moduleId: 0 }
   }
   ]
 },
@@ -268,6 +273,32 @@ const router = new Router({
   // mode: 'history', //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
+})
+
+router.beforeEach((to, from, next) => {
+// 当页面跳转dashboard时重新跳转到第一个有权限页面
+  if (to.path === '/dashboard') {
+    let flag = false
+    for (let i = 0; i < constantRouterMap.length; i++) {
+      if (constantRouterMap[i].isMain && constantRouterMap[i].children) {
+        if (!flag) {
+          for (let j = 0; j < constantRouterMap[i].children.length; j++) {
+            if (constantRouterMap[i].children[j].meta.visible) {
+              flag = true
+              next({
+                path: constantRouterMap[i].path + '/' + constantRouterMap[i].children[j].path
+              })
+              break
+            }
+          }
+        } else {
+          break
+        }
+      }
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

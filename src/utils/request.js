@@ -3,8 +3,6 @@ import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 // import { getToken } from '@/utils/auth'
 
-// axios.defaults.headers.baseURL = 'http://192.168.15.41:9999/smapapi/product'
-// axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'
 // 创建axios实例
 const service = axios.create({
   headers: {

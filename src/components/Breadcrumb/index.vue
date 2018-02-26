@@ -26,11 +26,12 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      let matched = this.$route.matched.filter(item => item.name)
-      const first = matched[0]
-      if (first && first.name !== 'dashboard') {
-        matched = [{ path: '/dashboard', meta: { title: '主页' }}].concat(matched)
-      }
+      const matched = this.$route.matched.filter(item => item.name)
+      // 取消根目录为主页
+      // const first = matched[0]
+      // if (first && first.name !== 'dashboard') {
+      //   matched = [{ path: '/dashboard', meta: { title: '主页' }}].concat(matched)
+      // }
       this.levelList = matched
     }
   }

@@ -19,9 +19,9 @@
           <sidebar-item :is-nest="true" class="nest-menu" v-if="child.children&&child.children.length>0" :routes="[child]" :key="child.path"></sidebar-item>
 
           <router-link v-else :to="item.path+'/'+child.path" :key="child.name">
-            <el-menu-item :index="item.path+'/'+child.path">
+            <el-menu-item :index="item.path+'/'+child.path" @click="selectMenu(child.meta.moduleId)">
               <svg-icon v-if="child.meta&&child.meta.icon" :icon-class="child.meta.icon"></svg-icon>
-              <span v-if="child.meta&&child.meta.title">{{child.meta.title}}</span>
+              <span v-if="child.meta&&child.meta.title">{{child.meta.title}}</span>{{child.meta.moduleId}}
             </el-menu-item>
           </router-link>
         </template>
@@ -41,18 +41,25 @@ export default {
     isNest: {
       type: Boolean,
       default: false
+    },
+    sideLoading: true
+  },
+  methods: {
+    selectMenu(id) {
+      this.$store.dispatch('GetModuleAuthority', id).then(() => {
+        // this.sideLoading = false
+      }).catch(() => {
+        // this.sideLoading = false
+      })
     }
   },
   mounted: function() {
-    console.log(this.routes)
-    console.log(this.$store.getters)
     const routes = this.routes
     for (let i = 0; i < routes.length; i++) {
       if (routes[i].meta) {
         routes[i].meta.visible = false
         const authorities = this.$store.getters.authority
         for (var auth in authorities) {
-          console.log(auth)
           // 一级菜单权限
           if (routes[i].meta.title === auth) {
             routes[i].meta.visible = true
@@ -66,6 +73,7 @@ export default {
                     const authInfo = authorities[auth][n]
                     if (routeChild.meta.title === authInfo.moduleName) {
                       routeChild.meta.visible = true
+                      routeChild.meta.moduleId = authInfo.pmModulesId
                       break
                     }
                   }
@@ -76,6 +84,8 @@ export default {
         }
       }
     }
+    // 刷新页面，查询按钮权限
+    this.selectMenu(this.$router.history.current.meta.moduleId)
   }
 }
 </script>

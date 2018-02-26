@@ -40,3 +40,15 @@ export function logout() {
     method: 'post'
   })
 }
+
+// 按钮权限
+export function getModuleAuthority(userId, id) {
+  return request({
+    url: '/user/getModuleOpts',
+    method: 'get',
+    params: {
+      userId: userId,
+      pmModulesId: id
+    }
+  })
+}
