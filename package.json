@@ -15,6 +15,7 @@
     "dependencies": {
         "axios": "0.17.1",
         "element-ui": "2.0.8",
+        "express": "^4.16.2",
         "js-cookie": "2.2.0",
         "less": "^2.7.3",
         "less-loader": "^4.0.5",

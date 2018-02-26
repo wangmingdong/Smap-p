@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px"
       class="card-box login-form">
-      <h3 class="title">Smap-P</h3>
+      <h3 class="title">Smap-p</h3>
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
@@ -19,7 +19,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
-          Sign in
+          登录
         </el-button>
       </el-form-item>
       <div class="tips">
@@ -85,14 +85,31 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss">
   $bg:#2d3a4b;
-  $dark_gray:#889aa4;
+  $dark_gray:#eeeeee;
   $light_gray:#eee;
+  $bg_img: '../../assets/bg-road.jpg';
 
   .login-container {
     position: fixed;
     height: 100%;
     width:100%;
     background-color: $bg;
+    background: url($bg_img) no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    &:after{
+      content: "";
+      width:100%;
+      height:100%;
+      position: absolute;
+      left:0;
+      top:0;
+      background: inherit;
+      filter: blur(4px);
+      z-index: 2;
+    }
     input:-webkit-autofill {
       -webkit-box-shadow: 0 0 0px 1000px #293444 inset !important;
       -webkit-text-fill-color: #fff !important;
@@ -136,11 +153,16 @@ export default {
     }
     .login-form {
       position: absolute;
-      left: 0;
-      right: 0;
+      // left: 0;
+      // right: 0;
       width: 400px;
       padding: 35px 35px 15px 35px;
-      margin: 120px auto;
+      // margin: 120px auto;
+      left:50%;
+      top:50%;
+      transform: translate(-50%,-50%);
+      text-align: center;
+      z-index:11;
     }
     .el-form-item {
       border: 1px solid rgba(255, 255, 255, 0.1);
