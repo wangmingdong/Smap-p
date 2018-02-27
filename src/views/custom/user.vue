@@ -5,13 +5,13 @@
         <div class="form-container">
           <div class="form-label">账号：</div>
           <div class="form-content">
-            <el-input placeholder="搜索内容" v-model="searchText"></el-input>
+            <el-input placeholder="搜索内容" v-model="searchText" :clearable="true" v-on:change="queryData"></el-input>
           </div>
         </div>
         <div class="form-container">
           <div class="form-label">账号状态：</div>
           <div class="form-content">
-            <el-select v-model="uNameStatus" placeholder="请选择">
+            <el-select v-model="uNameStatus" @change="queryData" placeholder="请选择">
               <el-option
                 v-for="item in uNameStatusOptions"
                 :key="item.value"
@@ -27,10 +27,9 @@
         <el-button type="primary" v-if="moduleOpts.indexOf('1') > -1" @click="addUser">新增</el-button>
         <el-button v-if="moduleOpts.indexOf('4') > -1" @click="openUpdateUser">修改</el-button>
         <el-button type="danger" v-if="moduleOpts.indexOf('2') > -1" @click="deleteUsers">删除</el-button>
-        {{moduleOpts}}
       </div>
     </div>
-    <el-table :data="list" v-loading.body="listLoading" @selection-change="selectRowData" element-loading-text="Loading" border fit highlight-current-row>
+    <el-table :data="list" v-loading.body="listLoading" empty-text="无数据" @selection-change="selectRowData" element-loading-text="加载中" border fit highlight-current-row>
       <el-table-column align="center"
         type="selection"
         width="55">
@@ -105,8 +104,7 @@
     <el-dialog title="用户详情" :visible.sync="userInfoModal">
       <user-info-form ref="userInfoComponent" :user-detail-info="userInfo"></user-info-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="userInfoModal = false">取 消</el-button>
-        <el-button type="primary" @click="doUpdateUser">确 定</el-button>
+        <el-button type="primary" @click="userInfoModal = false">关 闭</el-button>
       </div>
     </el-dialog>
   </div>
@@ -227,20 +225,40 @@ export default {
     // 保存修改用户
     doUpdateUser() {
       console.log(this.editUserInfo)
-      this.$store.dispatch('UpdateUser', this.editUserInfo).then(data => {
-        this.userUpdateModal = false
-        this.queryData()
+      this.$refs.userUpdateComponent.$refs.editUserForm.validate((valid) => {
+        if (valid) {
+          this.$store.dispatch('UpdateUser', this.editUserInfo).then(data => {
+            this.userUpdateModal = false
+            this.queryData()
+          })
+        } else {
+          this.$message({
+            message: '表单验证失败',
+            type: 'warning'
+          })
+          return false
+        }
       })
     },
     // 保存新建用户
     doAddUser() {
-      this.$refs.userAddComponent.getRoles()
-      this.$refs.userAddComponent.getProducts()
-      this.$store.dispatch('CreateUser', this.addUserInfo).then(data => {
-        this.userAddModal = false
-        this.initUser()
-        this.$refs.userAddComponent.initForm()
-        this.queryData()
+      this.$refs.userAddComponent.$refs.addUserForm.validate((valid) => {
+        if (valid) {
+          this.$store.dispatch('CreateUser', this.addUserInfo).then(data => {
+            this.userAddModal = false
+            this.initUser()
+            this.$refs.userAddComponent.initForm()
+            this.$refs.userAddComponent.getRoles()
+            this.$refs.userAddComponent.getProducts()
+            this.queryData()
+          })
+        } else {
+          this.$message({
+            message: '表单验证失败',
+            type: 'warning'
+          })
+          return false
+        }
       })
     },
     // 勾选一行

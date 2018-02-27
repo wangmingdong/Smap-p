@@ -116,9 +116,10 @@
       },
       getProducts() {
         this.$store.dispatch('GetProByUser').then(data => {
+          console.log(data)
           this.productOptions = data
           if (this.productOptions.length) {
-            this.userAddInfo.specInfoId = this.productOptions[0].specInfoId
+            this.userAddInfo.specInfoId = [this.productOptions[0].specInfoId]
           }
         })
       },

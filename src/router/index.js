@@ -110,20 +110,20 @@ export const constantRouterMap = [{
   redirect: '/custom/user',
   name: 'CustomAuthority',
   isMain: true,
-  meta: { title: '客户权限', icon: 'example', visible: true },
+  meta: { title: '客户权限', icon: 'customer', visible: true },
   children: [{
     path: 'user',
     name: 'UserManage',
     component: () =>
                   import('@/views/custom/user'),
-    meta: { title: '用户管理', icon: 'table', visible: true, moduleId: 0 }
+    meta: { title: '用户管理', icon: 'user', visible: true, moduleId: 0 }
   },
   {
     path: 'role',
     name: 'RoleManage',
     component: () =>
                   import('@/views/custom/role'),
-    meta: { title: '角色管理', icon: 'tree', visible: true, moduleId: 0 }
+    meta: { title: '角色管理', icon: 'role', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
@@ -155,20 +155,20 @@ export const constantRouterMap = [{
   redirect: '/example/table',
   name: 'ProductManage',
   isMain: true,
-  meta: { title: '产品管理', icon: 'example', visible: true },
+  meta: { title: '产品管理', icon: 'product', visible: true },
   children: [{
     path: 'table',
     name: 'ProductMaintain',
     component: () =>
                     import('@/views/table/index'),
-    meta: { title: '产品维护', icon: 'table', visible: true, moduleId: 0 }
+    meta: { title: '产品维护', icon: 'repair', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'CurrentControl',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '限流控制', icon: 'tree', visible: true, moduleId: 0 }
+    meta: { title: '限流控制', icon: 'control', visible: true, moduleId: 0 }
   }
   ]
 },
@@ -179,27 +179,27 @@ export const constantRouterMap = [{
   redirect: '/example/table',
   name: 'DataManage',
   isMain: true,
-  meta: { title: '数据管理', icon: 'example', visible: true },
+  meta: { title: '数据管理', icon: 'data', visible: true },
   children: [{
     path: 'table',
     name: 'DayProduce',
     component: () =>
                     import('@/views/table/index'),
-    meta: { title: '日出品', icon: 'table', visible: true, moduleId: 0 }
+    meta: { title: '日出品', icon: 'sun', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'NormalProduct',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '常规产品', icon: 'tree', visible: true, moduleId: 0 }
+    meta: { title: '常规产品', icon: 'product-features', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'RoadConstruction',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '施工道路', icon: 'tree', visible: true, moduleId: 0 }
+    meta: { title: '施工道路', icon: 'road', visible: true, moduleId: 0 }
   }
   ]
 },
@@ -210,7 +210,7 @@ export const constantRouterMap = [{
   redirect: '/example/table',
   name: 'QueryTotal',
   isMain: true,
-  meta: { title: '查询统计', icon: 'example', visible: true },
+  meta: { title: '查询统计', icon: 'total', visible: true },
   children: [{
     path: 'table',
     name: 'QDayProduce',
@@ -234,34 +234,34 @@ export const constantRouterMap = [{
   redirect: '/example/table',
   name: 'SystemAuthority',
   isMain: true,
-  meta: { title: '系统权限', icon: 'example', visible: true },
+  meta: { title: '系统权限', icon: 'system', visible: true },
   children: [{
     path: 'table',
     name: 'SystemUser',
     component: () =>
                     import('@/views/table/index'),
-    meta: { title: '系统用户', icon: 'table', visible: true, moduleId: 0 }
+    meta: { title: '系统用户', icon: 'system-user', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'RoleAuthor',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '角色权限', icon: 'tree', visible: true, moduleId: 0 }
+    meta: { title: '角色权限', icon: 'login-user', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
     name: 'UserProduct',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '用户产品', icon: 'tree', visible: true, moduleId: 0 }
+    meta: { title: '用户产品', icon: 'similar-product', visible: true, moduleId: 0 }
   },
   {
     path: 'trees',
     name: 'ModelConfigure',
     component: () =>
                     import('@/views/tree/index'),
-    meta: { title: '模块配置', icon: 'tree', visible: true, moduleId: 0 }
+    meta: { title: '模块配置', icon: 'product-module', visible: true, moduleId: 0 }
   }
   ]
 },
