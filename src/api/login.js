@@ -3,7 +3,7 @@ var qs = require('qs')
 
 export function login(username, password) {
   return request({
-    url: '/user/login',
+    url: '/login',
     method: 'post',
     // `transformRequest`选项允许我们在请求发送到服务器之前对请求的数据做出一些改动
     // 该选项只适用于以下请求方式：`put/post/patch`
@@ -12,17 +12,6 @@ export function login(username, password) {
       // 返回数据需要格式化一下
       return qs.stringify({ param: JSON.stringify({ loginNo: username, loginPwd: password }) })
     }]
-  })
-}
-
-export function login1(username, password) {
-  return request({
-    url: '/user/login',
-    method: 'post',
-    data: {
-      username,
-      password
-    }
   })
 }
 

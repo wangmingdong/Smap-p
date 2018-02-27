@@ -32,6 +32,7 @@
 
 <script>
 // import { isvalidUsername } from '@/utils/validate'
+import { Message } from 'element-ui'
 
 export default {
   name: 'login',
@@ -67,8 +68,17 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
+          this.$store.dispatch('Login', this.loginForm).then((data) => {
+            console.log(data)
             this.loading = false
+            if (parseInt(data.code, 10) === 300) {
+              Message({
+                message: data.msg,
+                type: 'error',
+                duration: 5 * 1000
+              })
+              return
+            }
             this.$router.push({ path: '/' })
           }).catch(() => {
             this.loading = false

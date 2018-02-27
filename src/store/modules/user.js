@@ -1,7 +1,5 @@
 import { login, logout, getInfo, getModuleAuthority } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-// import request from '@/utils/request'
-// import axios from 'axios'
 
 const user = {
   state: {
@@ -39,34 +37,21 @@ const user = {
   },
 
   actions: {
-    // 登录
-    // Login({ commit }, userInfo) {
-    //   const username = userInfo.username.trim()
-    //   const loginParam = JSON.stringify({ 'loginNo': username, 'loginPwd': userInfo.password })
-    //   return new Promise((resolve, reject) => {
-    //     axios.post(`http://192.168.15.41:9999/smapapi/product/user/login`, loginParam).then(response => {
-    //       const data = response.data
-    //       setToken(data.token)
-    //       commit('SET_TOKEN', data.token)
-    //       resolve()
-    //     }).catch(error => {
-    //       reject(error)
-    //     })
-    //   })
-    // },
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
-          const data = response.data
-          setToken(data.token)
-          commit('SET_TOKEN', data.token)
-          commit('SET_AUTHORITY', data.pmModules)
-          commit('SET_NAME', data.loginNo)
-          commit('SET_USER_ID', data.userId)
-          // 头像默认
-          commit('SET_AVATAR', './src/assets/avatar.gif')
-          resolve()
+          if (parseInt(response.code, 10) === 200) {
+            const data = response.data
+            setToken(data.token)
+            commit('SET_TOKEN', data.token)
+            commit('SET_AUTHORITY', data.pmModules)
+            commit('SET_NAME', data.loginNo)
+            commit('SET_USER_ID', data.userId)
+            // 头像默认
+            commit('SET_AVATAR', './src/assets/avatar.gif')
+          }
+          resolve(response)
         }).catch(error => {
           reject(error)
         })
