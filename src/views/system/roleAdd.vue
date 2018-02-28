@@ -27,7 +27,7 @@
     <el-col :span="12">
       <el-col :span="24">
         <el-form-item label="权限选择：">
-          <el-tree :data="moduleData" :props="moduleProps" default-expand-all node-key="moduleId" ref="moduleTree" show-checkbox @check-change="selectModules" @node-click="clickModules"></el-tree>
+          <el-tree :data="moduleData" :props="moduleProps" default-expand-all node-key="moduleId" ref="moduleTree" show-checkbox @check-change="selectModules"></el-tree>
         </el-form-item>
       </el-col>
     </el-col>
@@ -76,7 +76,6 @@
       // 获取模块权限
       getModules() {
         this.$store.dispatch('GetModules').then(data => {
-          console.log(data)
           this.moduleData = data
           this.$refs.moduleTree.setCheckedKeys(this.roleAddInfo.roleModules)
         })
@@ -88,10 +87,6 @@
         for (let i = 0; i < checkNodes.length; i++) {
           this.roleAddInfo.roleModules.push(checkNodes[i].moduleId)
         }
-      },
-      // 点击树节点
-      clickModules(data) {
-        console.log(data)
       },
       initForm() {
         this.$refs['addRoleForm'].resetFields()

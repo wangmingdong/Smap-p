@@ -170,7 +170,6 @@ export default {
     },
     // 详情
     showInfo(index, row) {
-      console.log(index, row)
       this.$store.dispatch('QueryRole', row.roleId).then(data => {
         this.roleInfo = data
         this.roleInfoModal = true
@@ -181,7 +180,7 @@ export default {
       this.currentPage = curPage
       this.queryData()
     },
-    // 打开增加用户
+    // 打开增加角色
     addRole() {
       this.roleAddModal = true
       this.initRole()
@@ -192,7 +191,7 @@ export default {
         })
       }
     },
-    // 打开修改用户
+    // 打开修改角色
     openUpdateUser() {
       if (this.multipleSelection.length === 1) {
         this.$store.dispatch('QueryRole', this.multipleSelection[0].roleId).then(data => {
@@ -211,7 +210,7 @@ export default {
         })
       }
     },
-    // 保存修改用户
+    // 保存修改角色
     doUpdateUser() {
       this.$refs.roleUpdateComponent.$refs.editRoleForm.validate((valid) => {
         if (valid) {
@@ -229,7 +228,7 @@ export default {
         }
       })
     },
-    // 保存新建用户
+    // 保存新建角色
     doAddRole() {
       this.$refs.roleAddComponent.$refs.addRoleForm.validate((valid) => {
         if (valid) {
@@ -260,7 +259,7 @@ export default {
     selectRowData(val) {
       this.multipleSelection = val
     },
-    // 删除用户
+    // 删除角色
     deleteUsers() {
       if (this.multipleSelection.length) {
         this.$messageBox.confirm('请确认删除选中的数据, 是否继续?', '提示', {
@@ -297,7 +296,6 @@ export default {
         pageSize: this.pageSize
       }
       this.$store.dispatch('GetRoleList', param).then(data => {
-        console.log(data)
         this.list = data.result
         this.dataTotal = data.total
         this.listLoading = false
