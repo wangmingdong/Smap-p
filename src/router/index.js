@@ -229,24 +229,24 @@ export const constantRouterMap = [{
 },
   // 系统权限
 {
-  path: '/example',
+  path: '/system',
   component: Layout,
-  redirect: '/example/table',
+  redirect: '/system/user',
   name: 'SystemAuthority',
   isMain: true,
   meta: { title: '系统权限', icon: 'system', visible: true },
   children: [{
-    path: 'table',
+    path: 'user',
     name: 'SystemUser',
     component: () =>
-                    import('@/views/table/index'),
+                    import('@/views/system/user'),
     meta: { title: '系统用户', icon: 'system-user', visible: true, moduleId: 0 }
   },
   {
-    path: 'tree',
+    path: 'role',
     name: 'RoleAuthor',
     component: () =>
-                    import('@/views/tree/index'),
+                    import('@/views/system/role'),
     meta: { title: '角色权限', icon: 'login-user', visible: true, moduleId: 0 }
   },
   {
@@ -273,32 +273,6 @@ const router = new Router({
   // mode: 'history', //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
-})
-
-router.beforeEach((to, from, next) => {
-// 当页面跳转dashboard时重新跳转到第一个有权限页面
-  if (to.path === '/dashboard') {
-    let flag = false
-    for (let i = 0; i < constantRouterMap.length; i++) {
-      if (constantRouterMap[i].isMain && constantRouterMap[i].children) {
-        if (!flag) {
-          for (let j = 0; j < constantRouterMap[i].children.length; j++) {
-            if (constantRouterMap[i].children[j].meta.visible) {
-              flag = true
-              next({
-                path: constantRouterMap[i].path + '/' + constantRouterMap[i].children[j].path
-              })
-              break
-            }
-          }
-        } else {
-          break
-        }
-      }
-    }
-  } else {
-    next()
-  }
 })
 
 export default router

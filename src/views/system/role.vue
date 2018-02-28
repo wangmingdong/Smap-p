@@ -3,12 +3,6 @@
     <div class="table-header-container">
       <div class="table-search-container">
         <div class="form-container">
-          <div class="form-label">账号：</div>
-          <div class="form-content">
-            <el-input placeholder="搜索内容" v-model="searchText" :clearable="true" v-on:change="queryData"></el-input>
-          </div>
-        </div>
-        <div class="form-container">
           <div class="form-label">账号状态：</div>
           <div class="form-content">
             <el-select v-model="uNameStatus" @change="queryData" placeholder="请选择">
@@ -24,7 +18,7 @@
       </div>
       <div class="table-btn-group">
         <el-button v-if="moduleOpts.indexOf('3') > -1" @click="queryData">查询</el-button>
-        <el-button type="primary" v-if="moduleOpts.indexOf('1') > -1" @click="addUser">新增</el-button>
+        <el-button type="primary" v-if="moduleOpts.indexOf('1') > -1" @click="addRole">新增</el-button>
         <el-button v-if="moduleOpts.indexOf('4') > -1" @click="openUpdateUser">修改</el-button>
         <el-button type="danger" v-if="moduleOpts.indexOf('2') > -1" @click="deleteUsers">删除</el-button>
       </div>
@@ -36,34 +30,23 @@
       </el-table-column>
       <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
-          {{scope.row.userId}}
+          {{scope.row.roleId}}
         </template>
       </el-table-column>
-      <el-table-column label="账号" min-width="110">
+      <el-table-column label="角色名称" min-width="110">
         <template slot-scope="scope">
-          {{scope.row.loginNo}}
+          {{scope.row.roleName}}
         </template>
       </el-table-column>
       <el-table-column label="账号状态" min-width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.userStatus | statusFilter">{{formatStatus(scope.row.userStatus)}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="角色" min-width="110" align="center">
-        <template slot-scope="scope">
-          {{scope.row.roleName}}
+          <el-tag :type="scope.row.roleStatus | statusFilter">{{scope.row.roleStatus}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" min-width="200">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span>{{scope.row.createDate}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="最后登录时间" min-width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span>{{scope.row.lastLoginTime}}</span>
         </template>
       </el-table-column>
       <el-table-column label="详细信息" align="center" min-width="110">
@@ -85,26 +68,26 @@
       </el-pagination>
     </div>
     <!-- 新增 -->
-    <el-dialog title="新增用户" :visible.sync="userAddModal">
-      <user-add-form ref="userAddComponent" :user-add-info="addUserInfo"></user-add-form>
+    <el-dialog title="新增角色" :visible.sync="roleAddModal">
+      <role-add-form ref="roleAddComponent" :role-add-info="addRoleInfo"></role-add-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="userAddModal = false">取 消</el-button>
-        <el-button type="primary" @click="doAddUser">确 定</el-button>
+        <el-button @click="roleAddModal = false">取 消</el-button>
+        <el-button type="primary" @click="doAddRole">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 修改 -->
-    <el-dialog title="修改用户" :visible.sync="userUpdateModal">
-      <user-update-form ref="userUpdateComponent" :user-edit-info="editUserInfo"></user-update-form>
+    <el-dialog title="修改角色" :visible.sync="roleUpdateModal">
+      <role-update-form ref="roleUpdateComponent" :role-edit-info="editRoleInfo"></role-update-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="userUpdateModal = false">取 消</el-button>
+        <el-button @click="roleUpdateModal = false">取 消</el-button>
         <el-button type="primary" @click="doUpdateUser">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 详情 -->
-    <el-dialog title="用户详情" :visible.sync="userInfoModal">
-      <user-info-form ref="userInfoComponent" :user-detail-info="userInfo"></user-info-form>
+    <el-dialog title="角色详情" :visible.sync="roleInfoModal">
+      <role-info-form ref="roleInfoComponent" :role-info="roleInfo"></role-info-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="userInfoModal = false">关 闭</el-button>
+        <el-button type="primary" @click="roleInfoModal = false">关 闭</el-button>
       </div>
     </el-dialog>
   </div>
@@ -113,15 +96,15 @@
 <script>
 // import { getList } from '@/api/table'
 import { mapGetters } from 'vuex'
-import userAddForm from '@/views/system/userAdd.vue'
-import userUpdateForm from '@/views/system/userUpdate.vue'
-import userInfoForm from '@/views/system/userInfo.vue'
+import roleAddForm from '@/views/system/roleAdd.vue'
+import roleUpdateForm from '@/views/system/roleUpdate.vue'
+import roleInfoForm from '@/views/system/roleInfo.vue'
 
 export default {
   components: {
-    userAddForm,
-    userUpdateForm,
-    userInfoForm
+    roleAddForm,
+    roleUpdateForm,
+    roleInfoForm
   },
   data() {
     return {
@@ -142,45 +125,40 @@ export default {
           value: 0
         }
       ],
-      userAddModal: false,
-      userUpdateModal: false,
-      addUserInfo: {
-        loginNo: '',
-        loginPwd: '',
-        roleId: '',
-        specInfoId: '',
-        email: '',
-        userStatus: 1,
+      roleAddModal: false,
+      roleUpdateModal: false,
+      addRoleInfo: {
+        roleName: '',
+        roleModules: '',
+        roleStatus: 1,
         note: ''
       },
-      editUserInfo: null,
+      editRoleInfo: null,
       multipleSelection: [],
-      userInfoModal: false,
-      userInfo: null
+      roleInfoModal: false,
+      roleInfo: null
     }
   },
   filters: {
     statusFilter(status) {
       const statusMap = {
-        1: 'success',
-        2: 'gray',
-        3: 'danger'
+        '有效': 'success',
+        '无效': 'gray'
       }
       return statusMap[status]
     }
   },
   created() {
     this.queryData()
-    this.initUser()
+    this.initRole()
   },
   methods: {
-    // 初始化新建用户
-    initUser() {
-      this.addUserInfo.loginNo = ''
-      this.addUserInfo.loginPwd = ''
-      this.addUserInfo.email = ''
-      this.addUserInfo.userStatus = 1
-      this.addUserInfo.note = ''
+    // 初始化新建角色
+    initRole() {
+      this.addRoleInfo.roleName = ''
+      this.addRoleInfo.roleModules = []
+      this.addRoleInfo.roleStatus = 1
+      this.addRoleInfo.note = ''
     },
     // 格式化状态
     formatStatus(status) {
@@ -193,9 +171,9 @@ export default {
     // 详情
     showInfo(index, row) {
       console.log(index, row)
-      this.$store.dispatch('QueryUser', row.userId).then(data => {
-        this.userInfo = data
-        this.userInfoModal = true
+      this.$store.dispatch('QueryRole', row.roleId).then(data => {
+        this.roleInfo = data
+        this.roleInfoModal = true
       })
     },
     // 分页
@@ -204,15 +182,27 @@ export default {
       this.queryData()
     },
     // 打开增加用户
-    addUser() {
-      this.userAddModal = true
+    addRole() {
+      this.roleAddModal = true
+      this.initRole()
+      if (this.$refs.roleAddComponent) {
+        setTimeout(() => {
+          this.$refs.roleAddComponent.initForm()
+          this.$refs.roleAddComponent.refreshModuleTree()
+        })
+      }
     },
     // 打开修改用户
     openUpdateUser() {
       if (this.multipleSelection.length === 1) {
-        this.$store.dispatch('QueryUser', this.multipleSelection[0].userId).then(data => {
-          this.editUserInfo = data
-          this.userUpdateModal = true
+        this.$store.dispatch('QueryRole', this.multipleSelection[0].roleId).then(data => {
+          this.editRoleInfo = data
+          this.roleUpdateModal = true
+          if (this.$refs.roleUpdateComponent) {
+            setTimeout(() => {
+              this.$refs.roleUpdateComponent.checkModuleTree()
+            })
+          }
         })
       } else {
         this.$message({
@@ -223,11 +213,11 @@ export default {
     },
     // 保存修改用户
     doUpdateUser() {
-      console.log(this.editUserInfo)
-      this.$refs.userUpdateComponent.$refs.editUserForm.validate((valid) => {
+      this.$refs.roleUpdateComponent.$refs.editRoleForm.validate((valid) => {
         if (valid) {
-          this.$store.dispatch('UpdateUser', this.editUserInfo).then(data => {
-            this.userUpdateModal = false
+          this.$store.dispatch('UpdateRole', this.editRoleInfo).then(data => {
+            this.roleUpdateModal = false
+            this.$refs.roleUpdateComponent.refreshModuleTree()
             this.queryData()
           })
         } else {
@@ -240,16 +230,22 @@ export default {
       })
     },
     // 保存新建用户
-    doAddUser() {
-      this.$refs.userAddComponent.$refs.addUserForm.validate((valid) => {
+    doAddRole() {
+      this.$refs.roleAddComponent.$refs.addRoleForm.validate((valid) => {
         if (valid) {
-          this.$store.dispatch('CreateUser', this.addUserInfo).then(data => {
-            this.userAddModal = false
-            this.initUser()
-            this.$refs.userAddComponent.initForm()
-            this.$refs.userAddComponent.getRoles()
-            this.$refs.userAddComponent.getProducts()
-            this.queryData()
+          this.$store.dispatch('CreateRole', this.addRoleInfo).then(data => {
+            this.roleAddModal = false
+            if (parseInt(data.code, 10) === 200) {
+              this.initRole()
+              this.$refs.roleAddComponent.initForm()
+              this.$refs.roleAddComponent.refreshModuleTree()
+              this.queryData()
+            } else {
+              this.$message({
+                message: data.msg,
+                type: 'error'
+              })
+            }
           })
         } else {
           this.$message({
@@ -272,11 +268,11 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          const userIds = []
+          const roleIds = []
           for (let i = 0; i < this.multipleSelection.length; i++) {
-            userIds.push(this.multipleSelection[i].userId)
+            roleIds.push(this.multipleSelection[i].userId)
           }
-          this.$store.dispatch('DeleteUser', userIds.join(',')).then(data => {
+          this.$store.dispatch('DeleteRole', roleIds.join(',')).then(data => {
             this.queryData()
             this.currentPage = 1
             this.$message({
@@ -296,12 +292,11 @@ export default {
     queryData() {
       this.listLoading = true
       const param = {
-        loginNo: this.searchText,
-        userStatus: this.uNameStatus,
+        roleStatus: this.uNameStatus,
         pageNum: this.currentPage,
         pageSize: this.pageSize
       }
-      this.$store.dispatch('GetUserList', param).then(data => {
+      this.$store.dispatch('GetRoleList', param).then(data => {
         console.log(data)
         this.list = data.result
         this.dataTotal = data.total

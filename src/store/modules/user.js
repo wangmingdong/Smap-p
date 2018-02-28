@@ -43,6 +43,7 @@ const user = {
         login(username, userInfo.password).then(response => {
           if (parseInt(response.code, 10) === 200) {
             const data = response.data
+            console.log(data)
             setToken(data.token)
             commit('SET_TOKEN', data.token)
             commit('SET_AUTHORITY', data.pmModules)

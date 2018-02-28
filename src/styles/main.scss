@@ -1,3 +1,4 @@
+$simpleGrayBoxShadow: inset 0 0 5px rgba(0,0,0,0.2);
 .table-header-container {
   margin-bottom: 10px;
   display: flex;
@@ -17,4 +18,28 @@
   display: flex;
   justify-content: flex-end;
   margin: 5px;
+}
+/*滚动条样式*/
+.innerbox{
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: #000;
+  font-size: .7rem;
+  font-family: "\5FAE\8F6F\96C5\9ED1",Helvetica,"黑体",Arial,Tahoma;
+  height: 100%;
+}
+.innerbox::-webkit-scrollbar {/*滚动条整体样式*/
+  width: 5px;     /*高宽分别对应横竖滚动条的尺寸*/
+  height: 4px;
+  transition: all .3s;
+}
+.innerbox::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+  border-radius: 5px;
+  -webkit-box-shadow: $simpleGrayBoxShadow;
+  background: rgba(0,0,0,0.2);
+}
+.innerbox::-webkit-scrollbar-track {/*滚动条里面轨道*/
+  -webkit-box-shadow: $simpleGrayBoxShadow;
+  border-radius: 0;
+  background: rgba(0,0,0,0.1);
 }
