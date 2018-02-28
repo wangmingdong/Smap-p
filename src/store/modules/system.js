@@ -1,4 +1,4 @@
-// 用户管理模块
+// 系统模块
 import {
   // 用户
   getUserList,

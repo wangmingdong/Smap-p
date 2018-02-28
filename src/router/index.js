@@ -174,9 +174,9 @@ export const constantRouterMap = [{
 },
   // 数据管理
 {
-  path: '/example',
+  path: '/data',
   component: Layout,
-  redirect: '/example/table',
+  redirect: '/data/table',
   name: 'DataManage',
   isMain: true,
   meta: { title: '数据管理', icon: 'data', visible: true },
@@ -188,10 +188,10 @@ export const constantRouterMap = [{
     meta: { title: '日出品', icon: 'sun', visible: true, moduleId: 0 }
   },
   {
-    path: 'tree',
+    path: 'product',
     name: 'NormalProduct',
     component: () =>
-                    import('@/views/tree/index'),
+                    import('@/views/data/product'),
     meta: { title: '常规产品', icon: 'product-features', visible: true, moduleId: 0 }
   },
   {
