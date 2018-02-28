@@ -111,7 +111,7 @@ export default {
       list: null,
       listLoading: true,
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 20,
       dataTotal: 0,
       searchText: '',
       uNameStatus: 1,
@@ -270,7 +270,7 @@ export default {
         }).then(() => {
           const roleIds = []
           for (let i = 0; i < this.multipleSelection.length; i++) {
-            roleIds.push(this.multipleSelection[i].userId)
+            roleIds.push(this.multipleSelection[i].roleId)
           }
           this.$store.dispatch('DeleteRole', roleIds.join(',')).then(data => {
             this.queryData()

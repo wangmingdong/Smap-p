@@ -128,7 +128,7 @@ export default {
       list: null,
       listLoading: true,
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 20,
       dataTotal: 0,
       searchText: '',
       uNameStatus: 1,
