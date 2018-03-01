@@ -5,24 +5,24 @@ var qs = require('qs')
 // 查询产品列表
 export function getProductList(param) {
   return request({
-    url: '/user/query',
+    url: '/manage/common/query',
     method: 'get',
     params: {
-      loginNo: param.loginNo,
-      userStatus: param.userStatus,
+      specInfoId: param.specInfoId,
+      productName: param.productName,
       pageNum: param.pageNum,
       pageSize: param.pageSize
     }
   })
 }
 
-// 删除产品
-export function deleteProduct(userId) {
+// 发布产品
+export function publishProduct(userId) {
   const param = {
     userId: userId
   }
   return request({
-    url: '/user/delete',
+    url: '/manage/common/release',
     method: 'post',
     data: param,
     transformRequest: [function(data) {

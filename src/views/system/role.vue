@@ -17,10 +17,10 @@
         </div>
       </div>
       <div class="table-btn-group">
-        <el-button v-if="moduleOpts.indexOf('3') > -1" @click="queryData">查询</el-button>
-        <el-button type="primary" v-if="moduleOpts.indexOf('1') > -1" @click="addRole">新增</el-button>
-        <el-button v-if="moduleOpts.indexOf('4') > -1" @click="openUpdateUser">修改</el-button>
-        <el-button type="danger" v-if="moduleOpts.indexOf('2') > -1" @click="deleteUsers">删除</el-button>
+        <el-button v-if="moduleOpts && moduleOpts.indexOf('3') > -1" @click="queryData">查询</el-button>
+        <el-button type="primary" v-if="moduleOpts && moduleOpts.indexOf('1') > -1" @click="addRole">新增</el-button>
+        <el-button v-if="moduleOpts && moduleOpts.indexOf('4') > -1" @click="openUpdateUser">修改</el-button>
+        <el-button type="danger" v-if="moduleOpts && moduleOpts.indexOf('2') > -1" @click="deleteUsers">删除</el-button>
       </div>
     </div>
     <el-table :data="list" v-loading.body="listLoading" empty-text="无数据" @selection-change="selectRowData" element-loading-text="加载中" border fit highlight-current-row>
@@ -199,7 +199,7 @@ export default {
           this.roleUpdateModal = true
           if (this.$refs.roleUpdateComponent) {
             setTimeout(() => {
-              this.$refs.roleUpdateComponent.checkModuleTree()
+              this.$refs.roleUpdateComponent.getModules()
             })
           }
         })
@@ -214,6 +214,19 @@ export default {
     doUpdateUser() {
       this.$refs.roleUpdateComponent.$refs.editRoleForm.validate((valid) => {
         if (valid) {
+          const newModule = []
+          const editModeles = this.$refs.roleUpdateComponent.moduleData
+          for (let i = 0; i < editModeles.length; i++) {
+            if (editModeles[i].firstCheckAll || editModeles[i].isIndeterminate) {
+              newModule.push(editModeles[i].moduleId + ':' + '')
+              if (editModeles[i].secondMenu.length) {
+                for (let j = 0; j < editModeles[i].secondMenu.length; j++) {
+                  newModule.push(editModeles[i].secondMenu[j].moduleId + ':' + editModeles[i].secondMenu[j].checkedOpts.join(','))
+                }
+              }
+            }
+          }
+          this.editRoleInfo.roleModules = newModule.join(';')
           this.$store.dispatch('UpdateRole', this.editRoleInfo).then(data => {
             this.roleUpdateModal = false
             this.$refs.roleUpdateComponent.refreshModuleTree()
@@ -232,6 +245,19 @@ export default {
     doAddRole() {
       this.$refs.roleAddComponent.$refs.addRoleForm.validate((valid) => {
         if (valid) {
+          const newModule = []
+          const addModeles = this.$refs.roleAddComponent.moduleData
+          for (let i = 0; i < addModeles.length; i++) {
+            if (addModeles[i].firstCheckAll || addModeles[i].isIndeterminate) {
+              newModule.push(addModeles[i].moduleId + ':' + '')
+              if (addModeles[i].secondMenu.length) {
+                for (let j = 0; j < addModeles[i].secondMenu.length; j++) {
+                  newModule.push(addModeles[i].secondMenu[j].moduleId + ':' + addModeles[i].secondMenu[j].checkedOpts.join(','))
+                }
+              }
+            }
+          }
+          this.addRoleInfo.roleModules = newModule.join(';')
           this.$store.dispatch('CreateRole', this.addRoleInfo).then(data => {
             this.roleAddModal = false
             if (parseInt(data.code, 10) === 200) {

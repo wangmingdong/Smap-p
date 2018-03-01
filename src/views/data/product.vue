@@ -3,24 +3,29 @@
     <div class="table-header-container">
       <div class="table-search-container">
         <div class="form-container">
-          <div class="form-label">账号状态：</div>
+          <div class="form-label">产品：</div>
           <div class="form-content">
-            <el-select v-model="uNameStatus" @change="queryData" placeholder="请选择">
+            <el-select v-model="specInfoId" @change="queryData" placeholder="请选择">
               <el-option
-                v-for="item in uNameStatusOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item in productOptions"
+                :key="item.specInfoId"
+                :label="item.specInfoName"
+                :value="item.specInfoId">
               </el-option>
             </el-select>
           </div>
         </div>
+        <div class="form-container">
+          <div class="form-label">版本：</div>
+          <div class="form-content">
+            <el-input v-model="productName" :clearable="true" v-on:change="queryData"></el-input>
+          </div>
+        </div>
       </div>
       <div class="table-btn-group">
-        <el-button v-if="moduleOpts.indexOf('3') > -1" @click="queryData">查询</el-button>
-        <el-button type="primary" v-if="moduleOpts.indexOf('1') > -1" @click="addRole">新增</el-button>
-        <el-button v-if="moduleOpts.indexOf('4') > -1" @click="openUpdateUser">修改</el-button>
-        <el-button type="danger" v-if="moduleOpts.indexOf('2') > -1" @click="deleteUsers">删除</el-button>
+        <el-button v-if="moduleOpts && moduleOpts.indexOf('3') > -1" @click="queryData">查询</el-button>
+        <el-button type="primary" v-if="moduleOpts && moduleOpts.indexOf('5') > -1" @click="addRole">发布</el-button>
+        <el-button type="danger" v-if="moduleOpts && moduleOpts.indexOf('6') > -1" @click="deleteUsers">作废</el-button>
       </div>
     </div>
     <el-table :data="list" v-loading.body="listLoading" empty-text="无数据" @selection-change="selectRowData" element-loading-text="加载中" border fit highlight-current-row>
@@ -114,17 +119,9 @@ export default {
       pageSize: 20,
       dataTotal: 0,
       searchText: '',
-      uNameStatus: 1,
-      uNameStatusOptions: [
-        {
-          label: '有效',
-          value: 1
-        },
-        {
-          label: '无效',
-          value: 0
-        }
-      ],
+      specInfoId: 1,
+      productName: '',
+      productOptions: [],
       roleAddModal: false,
       roleUpdateModal: false,
       addRoleInfo: {
@@ -149,8 +146,8 @@ export default {
     }
   },
   created() {
-    this.queryData()
     this.initRole()
+    this.getProducts()
   },
   methods: {
     // 初始化新建角色
@@ -159,6 +156,13 @@ export default {
       this.addRoleInfo.roleModules = []
       this.addRoleInfo.roleStatus = 1
       this.addRoleInfo.note = ''
+    },
+    getProducts() {
+      this.$store.dispatch('GetProByUser').then(data => {
+        this.productOptions = data
+        this.specInfoId = this.productOptions[0].specInfoId
+        this.queryData()
+      })
     },
     // 格式化状态
     formatStatus(status) {
@@ -291,11 +295,12 @@ export default {
     queryData() {
       this.listLoading = true
       const param = {
-        roleStatus: this.uNameStatus,
+        specInfoId: this.specInfoId,
+        productName: this.productName,
         pageNum: this.currentPage,
         pageSize: this.pageSize
       }
-      this.$store.dispatch('GetRoleList', param).then(data => {
+      this.$store.dispatch('GetProductList', param).then(data => {
         this.list = data.result
         this.dataTotal = data.total
         this.listLoading = false

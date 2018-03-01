@@ -149,9 +149,9 @@ const userManage = {
     // 新增角色
     CreateRole({ commit }, param) {
       return new Promise((resolve, reject) => {
-        if (param.roleModules.length) {
-          param.roleModules = param.roleModules.join(',')
-        }
+        // if (param.roleModules.length) {
+        //   param.roleModules = param.roleModules.join(',')
+        // }
         createRole(param).then(response => {
           resolve(response)
         }).catch(error => {
@@ -163,9 +163,9 @@ const userManage = {
     // 修改角色
     UpdateRole({ commit }, param) {
       return new Promise((resolve, reject) => {
-        if (param.roleModules.length) {
-          param.roleModules = param.roleModules.join(',')
-        }
+        // if (param.roleModules.length) {
+        //   param.roleModules = param.roleModules.join(',')
+        // }
         delete param.roleName
         updateRole(param).then(response => {
           resolve(response)
@@ -191,9 +191,9 @@ const userManage = {
       return new Promise((resolve, reject) => {
         queryRole(roleId).then(response => {
           const result = response.data
-          if (result.roleModules) {
-            result.roleModules = result.roleModules.split(',')
-          }
+          // if (result.roleModules) {
+          //   result.roleModules = result.roleModules.split(',')
+          // }
           resolve(result)
         }).catch(error => {
           reject(error)

@@ -1,5 +1,5 @@
 // 数据模块
-import { getProductList, deleteProduct } from '@/api/data'
+import { getProductList, publishProduct } from '@/api/data'
 
 const data = {
   state: {
@@ -13,8 +13,6 @@ const data = {
       return new Promise((resolve, reject) => {
         getProductList(param).then(response => {
           const data = response.data
-          commit('SET_USER_LIST', data.result)
-          commit('SET_USER_TOTAL', data.total)
           resolve(data)
         }).catch(error => {
           reject(error)
@@ -22,10 +20,10 @@ const data = {
       })
     },
 
-    // 删除用户
-    DeleteProduct({ commit }, ids) {
+    // 发布产品
+    PublishProduct({ commit }, ids) {
       return new Promise((resolve, reject) => {
-        deleteProduct(ids).then(response => {
+        publishProduct(ids).then(response => {
           resolve(response)
         }).catch(error => {
           reject(error)

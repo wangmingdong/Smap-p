@@ -23,10 +23,10 @@
         </div>
       </div>
       <div class="table-btn-group">
-        <el-button v-if="moduleOpts.indexOf('3') > -1" @click="queryData">查询</el-button>
-        <el-button type="primary" v-if="moduleOpts.indexOf('1') > -1" @click="addUser">新增</el-button>
-        <el-button v-if="moduleOpts.indexOf('4') > -1" @click="openUpdateUser">修改</el-button>
-        <el-button type="danger" v-if="moduleOpts.indexOf('2') > -1" @click="deleteUsers">删除</el-button>
+        <el-button v-if="moduleOpts && moduleOpts.indexOf('3') > -1" @click="queryData">查询</el-button>
+        <el-button type="primary" v-if="moduleOpts && moduleOpts.indexOf('1') > -1" @click="addUser">新增</el-button>
+        <el-button v-if="moduleOpts && moduleOpts.indexOf('4') > -1" @click="openUpdateUser">修改</el-button>
+        <el-button type="danger" v-if="moduleOpts && moduleOpts.indexOf('2') > -1" @click="deleteUsers">删除</el-button>
       </div>
     </div>
     <el-table :data="list" v-loading.body="listLoading" empty-text="无数据" @selection-change="selectRowData" element-loading-text="加载中" border fit highlight-current-row>
