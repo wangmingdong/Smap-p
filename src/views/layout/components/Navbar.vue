@@ -2,11 +2,14 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
+    <div class="avatar-hello">{{$store.getters.name}}，你好</div>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <!-- <img class="user-avatar" :src="avatar"> -->
-        <img class="user-avatar" :src="avatarImg">
-        <i class="el-icon-caret-bottom"></i>
+        <div class="avatar-img">
+          <img class="user-avatar" :src="avatarImg">
+          <i class="el-icon-caret-bottom"></i>
+        </div>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
         <!-- <router-link class="inlineBlock" to="/">
@@ -26,7 +29,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import avatarImg from '@/assets/avatar.gif'
+import avatarImg from '@/assets/avatar.png'
 
 export default {
   data() {
@@ -73,6 +76,13 @@ export default {
     right: 90px;
     top: 16px;
     color: red;
+  }
+  .avatar-hello {
+    display: inline-block;
+    position: absolute;
+    right: 100px;
+    font-size: 14px;
+    color: gray;
   }
   .avatar-container {
     height: 50px;
