@@ -193,7 +193,6 @@ export default {
     },
     // 详情
     showInfo(index, row) {
-      console.log(index, row)
       this.$store.dispatch('QueryUser', row.userId).then(data => {
         this.userInfo = data
         this.userInfoModal = true
@@ -224,7 +223,6 @@ export default {
     },
     // 保存修改用户
     doUpdateUser() {
-      console.log(this.editUserInfo)
       this.$refs.userUpdateComponent.$refs.editUserForm.validate((valid) => {
         if (valid) {
           this.$store.dispatch('UpdateUser', this.editUserInfo).then(data => {

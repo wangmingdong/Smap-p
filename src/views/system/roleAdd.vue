@@ -49,7 +49,7 @@
                   <li class="h40" v-for="(secondMenu) in item.secondMenu" :key="secondMenu.moduleId">
                       <div class="left">
                           <el-checkbox   v-model="secondMenu.checkAll" :indeterminate="secondMenu.isIndeterminate && !secondMenu.checkAll" @change="handleCheckAllChange($event, item,secondMenu)" v-cloak>
-                              {{secondMenu.moduleName}}{{secondMenu.isIndeterminate}}
+                              {{secondMenu.moduleName}}
                           </el-checkbox>
                       </div>
                       <div class="right">

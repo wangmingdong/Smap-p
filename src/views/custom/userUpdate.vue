@@ -99,20 +99,6 @@
       getProducts() {
         this.$store.dispatch('GetProByUser').then(data => {
           this.productOptions = data
-          // this.productOptions = [
-          //   {
-          //     specInfoId: '20',
-          //     specInfoName: '限行限号'
-          //   },
-          //   {
-          //     specInfoId: '2',
-          //     specInfoName: '二二人'
-          //   },
-          //   {
-          //     specInfoId: '3',
-          //     specInfoName: '水电费'
-          //   }
-          // ]
         })
       },
       initForm() {
@@ -120,7 +106,6 @@
       }
     },
     created() {
-      console.log(this.userEditInfo)
       this.getRoles()
       this.getProducts()
     }

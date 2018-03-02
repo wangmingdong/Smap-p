@@ -28,7 +28,8 @@
         <el-button type="danger" v-if="moduleOpts && moduleOpts.indexOf('6') > -1" @click="operatePro(0)">作废</el-button>
       </div>
     </div>
-    <el-table :data="list" v-loading.body="listLoading" empty-text="无数据" @selection-change="selectRowData" element-loading-text="加载中" border fit highlight-current-row>
+    <el-table :data="list" v-loading.body="listLoading" ref="productTable" empty-text="无数据"
+     @select-all="selectAllData" @select="selectRowData" element-loading-text="加载中" border fit highlight-current-row>
       <el-table-column align="center"
         type="selection"
         width="55">
@@ -158,7 +159,6 @@ export default {
     },
     // 详情
     showInfo(index, row) {
-      console.log(row)
       if (this.productOptions) {
         for (let i = 0; i < this.productOptions.length; i++) {
           if (this.productOptions[i].specInfoId === this.specInfoId) {
@@ -176,9 +176,29 @@ export default {
       this.currentPage = curPage
       this.queryData()
     },
-    // 勾选一行
-    selectRowData(val) {
-      this.multipleSelection = val
+    // 勾选一行改变
+    selectAllData(dataList) {
+      const selectTemp = [...dataList]
+      for (let i = 0; i < selectTemp.length; i++) {
+        if (selectTemp[i].fileState !== 1) {
+          this.$message({
+            type: 'warning',
+            message: '只能勾选状态为未发布的数据'
+          })
+          this.$refs.productTable.toggleRowSelection(selectTemp[i], false)
+        }
+      }
+      this.multipleSelection = dataList
+    },
+    selectRowData(dataList, row) {
+      if (row.fileState !== 1) {
+        this.$message({
+          type: 'warning',
+          message: '只能勾选状态为未发布的数据'
+        })
+        this.$refs.productTable.toggleRowSelection(row, false)
+      }
+      this.multipleSelection = dataList
     },
     // 批量操作
     operatePro(type) {

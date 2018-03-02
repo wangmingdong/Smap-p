@@ -221,7 +221,9 @@ export default {
               newModule.push(editModeles[i].moduleId + ':' + '')
               if (editModeles[i].secondMenu.length) {
                 for (let j = 0; j < editModeles[i].secondMenu.length; j++) {
-                  newModule.push(editModeles[i].secondMenu[j].moduleId + ':' + editModeles[i].secondMenu[j].checkedOpts.join(','))
+                  if (editModeles[i].secondMenu[j].checkedOpts.length) {
+                    newModule.push(editModeles[i].secondMenu[j].moduleId + ':' + editModeles[i].secondMenu[j].checkedOpts.join(','))
+                  }
                 }
               }
             }
@@ -252,7 +254,9 @@ export default {
               newModule.push(addModeles[i].moduleId + ':' + '')
               if (addModeles[i].secondMenu.length) {
                 for (let j = 0; j < addModeles[i].secondMenu.length; j++) {
-                  newModule.push(addModeles[i].secondMenu[j].moduleId + ':' + addModeles[i].secondMenu[j].checkedOpts.join(','))
+                  if (addModeles[i].secondMenu[j].checkedOpts.length) {
+                    newModule.push(addModeles[i].secondMenu[j].moduleId + ':' + addModeles[i].secondMenu[j].checkedOpts.join(','))
+                  }
                 }
               }
             }

@@ -69,7 +69,6 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('Login', this.loginForm).then((data) => {
-            console.log(data)
             this.loading = false
             if (parseInt(data.code, 10) === 300) {
               Message({

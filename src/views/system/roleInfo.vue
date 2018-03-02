@@ -140,7 +140,19 @@
           for (let i = 0; i < this.moduleData.length; i++) {
             for (let j = 0; j < originModule.length; j++) {
               if (this.moduleData[i].moduleId === originModule[j].moduleId) {
+                // 一级项拷贝
+                const [...secTemp] = this.moduleData[i].secondMenu
                 this.moduleData[i] = Object.assign(this.moduleData[i], originModule[j])
+                // 由于浅拷贝 对象里面的数组secondMenu并未拷贝，只是进行了替换，这样的话最终结果只显示勾选的二级项
+                // 取出全部二级项，只对有值的进行更新
+                for (let m = 0; m < secTemp.length; m++) {
+                  for (let n = 0; n < this.moduleData[i].secondMenu.length; n++) {
+                    if (secTemp[m].moduleId === this.moduleData[i].secondMenu[n].moduleId) {
+                      secTemp[m] = { ...this.moduleData[i].secondMenu[n] }
+                    }
+                  }
+                }
+                this.moduleData[i].secondMenu = secTemp
               }
             }
           }

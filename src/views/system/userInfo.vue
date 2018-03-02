@@ -105,7 +105,6 @@
       }
     },
     created() {
-      console.log(this.userDetailInfo)
       this.getRoles()
       this.getProducts()
     }
