@@ -1,62 +1,74 @@
 <template>
-  <el-form :model="roleInfo" style="min-height: 200px;" ref="addRoleForm" label-width="100px">
+  <el-form :model="productInfo" style="min-height: 200px;" ref="proInfoForm" label-width="100px">
     <el-col :span="12">
-      <el-col :span="24">
-        <el-form-item label="角色名称：">
-          {{roleInfo.roleName}}
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item label="账号状态：">
-          {{formatStatus(roleInfo.roleStatus)}}
-        </el-form-item>
-      </el-col>
-      <el-col :span="24">
-        <el-form-item label="备注信息：">
-          {{roleInfo.note}}
-        </el-form-item>
-      </el-col>
+      <el-form-item label="版本：">
+        {{productInfo.productName}}
+      </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-col :span="24">
-        <el-form-item label="权限选择：">
-          <el-tree :data="moduleData" :props="moduleProps" default-expand-all node-key="moduleId" ref="moduleTree" show-checkbox @check-change="selectModules"></el-tree>
-        </el-form-item>
-      </el-col>
+      <el-form-item label="数据文件：">
+        {{productInfo.fileName}}
+      </el-form-item>
+    </el-col>
+    <el-col :span="12">
+      <el-form-item label="数据状态：">
+        <el-tag :type="productInfo.fileState | statusFilter">{{formatStatus(productInfo.fileState)}}</el-tag>
+      </el-form-item>
+    </el-col>
+    <el-col :span="12">
+      <el-form-item label="md5校验码：">
+        {{productInfo.fileMD5}}
+      </el-form-item>
+    </el-col>
+    <el-col :span="12">
+      <el-form-item label="上传时间：">
+        {{productInfo.createTime}}
+      </el-form-item>
+    </el-col>
+    <el-col :span="12">
+      <el-form-item label="发布时间：">
+        {{productInfo.releaseTime}}
+      </el-form-item>
+    </el-col>
+    <el-col :span="12">
+      <el-form-item label="文件大小：">
+        {{productInfo.fileSize}}
+      </el-form-item>
+    </el-col>
+    <el-col :span="12">
+      <el-form-item label="发布人员：">
+        {{formatStatus(productInfo.releaseName)}}
+      </el-form-item>
     </el-col>
   </el-form>
 </template>
 <script>
   export default {
-    name: 'roleInfoModal',
-    props: ['roleInfo'],
+    name: 'productInfoModal',
+    props: ['productInfo'],
     data() {
       return {
-        moduleData: [],
-        moduleProps: {
-          children: 'nextLevel',
-          label: 'moduleName',
-          disabled: 'disabled'
-        },
-        selectModuleData: []
+      }
+    },
+    filters: {
+      statusFilter(status) {
+        const statusMap = {
+          0: 'gray',
+          1: '',
+          2: 'success'
+        }
+        return statusMap[status]
       }
     },
     methods: {
       // 格式化状态
       formatStatus(status) {
         const patten = {
-          0: '无效',
-          1: '有效'
+          0: '废弃',
+          1: '未发布',
+          2: '已发布'
         }
         return patten[status]
-      },
-      // 树结构初始化
-      setTreeNode() {
-        this.$refs.moduleTree.setCheckedKeys(this.roleInfo.roleModules)
-      },
-      // 清空树勾选
-      refreshModuleTree() {
-        this.$refs.moduleTree.setCheckedKeys([])
       },
       // 获取模块权限
       getModules() {
@@ -71,19 +83,7 @@
               }
             }
           }
-          this.$refs.moduleTree.setCheckedKeys(this.roleInfo.roleModules)
         })
-      },
-      // 选择树节点
-      selectModules(data, checked, indeterminate) {
-        const checkNodes = this.$refs.moduleTree.getCheckedNodes()
-        this.roleInfo.roleModules = []
-        for (let i = 0; i < checkNodes.length; i++) {
-          this.roleInfo.roleModules.push(checkNodes[i].moduleId)
-        }
-      },
-      initForm() {
-        this.$refs['addRoleForm'].resetFields()
       }
     },
     created() {

@@ -1,0 +1,62 @@
+.role-table {
+  border: 1px solid #e0e0e0;
+  border-bottom: none;
+  padding: 0;
+  position: relative;
+  list-style-type:none;
+  .header {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e7e7e7;
+    background: #F8F8F9;
+    text-align: center;
+  }
+  .vertical-line {
+    width: 1px;
+    height: 100%;
+    background: #ddd;
+    position: absolute;
+    left: 30%;
+    top: 0
+  }
+  .left {
+    width: 30%;
+    float: left;
+    padding-left: 10px;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .one {
+    padding-left: 20px;
+  }
+  
+  .right {
+    width: 70%;
+    float: left;
+    padding-left: 10px;
+  }
+  
+  .item-icon {
+    margin-left: -5px;
+    padding: 5px;
+  }
+  
+  .line {
+    clear: both;
+    width: 100%;
+    height: 1px;
+    background: #e0e0e0;
+  }
+  .h40{
+    height: 39px;
+    line-height: 39px;
+    list-style-type:none;
+  }
+  [v-cloak] {
+    display: none;
+  }
+  .btn-opts-cell {
+  margin-left: 10px;
+  }
+}

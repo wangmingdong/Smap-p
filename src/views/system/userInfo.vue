@@ -27,7 +27,7 @@
     </el-col>
     <el-col :span="12">
       <el-form-item label="账号状态：">
-        {{formatStatus(userDetailInfo.userStatus)}}
+        <el-tag :type="userDetailInfo.userStatus | statusFilter">{{formatStatus(userDetailInfo.userStatus)}}</el-tag>
       </el-form-item>
     </el-col>
     <el-col :span="24">
@@ -49,6 +49,15 @@
           { label: '有效', value: 1 },
           { label: '无效', value: 0 }
         ]
+      }
+    },
+    filters: {
+      statusFilter(status) {
+        const statusMap = {
+          0: 'gray',
+          1: 'success'
+        }
+        return statusMap[status]
       }
     },
     methods: {

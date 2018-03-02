@@ -100,7 +100,6 @@ const userManage = {
       return new Promise((resolve, reject) => {
         queryUser(userId).then(response => {
           const result = response.data
-          console.log(response)
           result.specInfoId = result.specInfoId.split(',')
           resolve(result)
         }).catch(error => {

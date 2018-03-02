@@ -45,7 +45,7 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" min-width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time"></i>
+          <i class="el-icon-time" v-if="scope.row.createDate"></i>
           <span>{{scope.row.createDate}}</span>
         </template>
       </el-table-column>
@@ -172,6 +172,9 @@ export default {
     showInfo(index, row) {
       this.$store.dispatch('QueryRole', row.roleId).then(data => {
         this.roleInfo = data
+        if (this.$refs.roleInfoComponent) {
+          this.$refs.roleInfoComponent.getModules()
+        }
         this.roleInfoModal = true
       })
     },
@@ -185,10 +188,7 @@ export default {
       this.roleAddModal = true
       this.initRole()
       if (this.$refs.roleAddComponent) {
-        setTimeout(() => {
-          this.$refs.roleAddComponent.initForm()
-          this.$refs.roleAddComponent.refreshModuleTree()
-        })
+        this.$refs.roleAddComponent.getModules()
       }
     },
     // 打开修改角色

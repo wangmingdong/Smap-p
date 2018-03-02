@@ -38,7 +38,7 @@
                       <span v-if="item.secondMenu" v-cloak>{{item.moduleName}}</span>
               </div>
               <div class="right h40">
-                  <el-checkbox v-if="item.secondMenu" :indeterminate="item.isIndeterminate" @change="checkSecondAll(item)" v-model="item.firstCheckAll"> 所有</el-checkbox>
+                  <el-checkbox v-if="item.secondMenu" :indeterminate="item.isIndeterminate && !item.firstCheckAll" @change="checkSecondAll(item)" v-model="item.firstCheckAll"> 所有</el-checkbox>
 
                   <el-checkbox-group v-model="item.checkedOpts" @change="handleOneCheckedOptsChange(item)" v-else>
                       <el-checkbox  v-for="m in item.moduleOpts" :label="m.moduleId" :key="m.moduleId" v-cloak> {{m.moduleName}}</el-checkbox>
@@ -48,7 +48,7 @@
               <ul v-show="item.secondMenu&&!item.folded">
                   <li class="h40" v-for="(secondMenu) in item.secondMenu" :key="secondMenu.moduleId">
                       <div class="left">
-                          <el-checkbox   v-model="secondMenu.checkAll" :indeterminate="secondMenu.isIndeterminate" @change="handleCheckAllChange($event, item,secondMenu)" v-cloak>
+                          <el-checkbox   v-model="secondMenu.checkAll" :indeterminate="secondMenu.isIndeterminate && !secondMenu.checkAll" @change="handleCheckAllChange($event, item,secondMenu)" v-cloak>
                               {{secondMenu.moduleName}}{{secondMenu.isIndeterminate}}
                           </el-checkbox>
                       </div>
@@ -126,7 +126,7 @@
             item.firstCheckAll = true
           }
         }
-        console.log(this.moduleData)
+        this.refreshModuleTree()
       },
       // 单选
       handleCheckedOptsChange(item, secondMenu) {
@@ -212,6 +212,7 @@
       refreshModuleTree() {
         for (let i = 0; i < this.moduleData.length; i++) {
           const secArray = this.moduleData[i].secondMenu
+          this.moduleData[i].firstCheckAll = true
           if (secArray) {
             for (let j = 0; j < secArray.length; j++) {
               if (secArray[j].checkedOpts.length === secArray[j].moduleOpts.length) {
@@ -220,9 +221,11 @@
               } else if (secArray[j].checkedOpts.length === 0) {
                 secArray[j].checkAll = false
                 secArray[j].isIndeterminate = false
+                this.moduleData[i].firstCheckAll = false
               } else {
                 secArray[j].isIndeterminate = true
                 this.moduleData[i].isIndeterminate = true
+                this.moduleData[i].firstCheckAll = false
               }
               this.$set(secArray, j, secArray[j])
               this.$set(this.moduleData, i, this.moduleData[i])
@@ -282,69 +285,5 @@
     }
   }
 </script>
-<style>
-.role-table {
-    border: 1px solid #e0e0e0;
-    border-bottom: none;
-    padding: 0;
-    position: relative;
-    list-style-type:none;
-}
-
-.header {
-    height: 40px;
-    line-height: 40px;
-    border-bottom: 1px solid #e7e7e7;
-    background: #F8F8F9;
-    text-align: center;
-}
-
-.vertical-line {
-    width: 1px;
-    height: 100%;
-    background: #ddd;
-    position: absolute;
-    left: 30%;
-    top: 0
-}
-
-.left {
-    width: 30%;
-    float: left;
-    padding-left: 10px;
-    user-select: none;
-    cursor: pointer;
-}
-
-.one {
-    padding-left: 20px;
-}
-
-.right {
-    width: 70%;
-    float: left;
-    padding-left: 10px;
-}
-
-.item-icon {
-    margin-left: -5px;
-    padding: 5px;
-}
-
-.line {
-    clear: both;
-    width: 100%;
-    height: 1px;
-    background: #e0e0e0;
-}
-.h40{
-    height: 39px;
-    line-height: 39px;
-    list-style-type:none;
-}
-[v-cloak] {
-    display: none;
-}
-</style>
 
 

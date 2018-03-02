@@ -56,13 +56,13 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" min-width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time"></i>
+          <i class="el-icon-time" v-if="scope.row.createDate"></i>
           <span>{{scope.row.createDate}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="最后登录时间" min-width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time"></i>
+          <i class="el-icon-time" v-if="scope.row.lastLoginTime"></i>
           <span>{{scope.row.lastLoginTime}}</span>
         </template>
       </el-table-column>

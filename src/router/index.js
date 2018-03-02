@@ -115,7 +115,7 @@ export const constantRouterMap = [{
     path: 'user',
     name: 'UserManage',
     component: () =>
-                  import('@/views/custom/user'),
+                  import('@/views/custom/role'),
     meta: { title: '用户管理', icon: 'user', visible: true, moduleId: 0 }
   },
   {
