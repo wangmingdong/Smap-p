@@ -69,40 +69,6 @@ export const constantRouterMap = [{
   }]
 },
 
-{
-  path: '/example',
-  component: Layout,
-  redirect: '/example/table',
-  name: 'Example',
-  meta: { title: 'Example', icon: 'example', visible: true, moduleId: 0 },
-  children: [{
-    path: 'table',
-    name: 'Table',
-    component: () =>
-                    import('@/views/table/index'),
-    meta: { title: 'Table', icon: 'table', visible: true, moduleId: 0 }
-  },
-  {
-    path: 'tree',
-    name: 'Tree',
-    component: () =>
-                    import('@/views/tree/index'),
-    meta: { title: 'Tree', icon: 'tree', visible: true, moduleId: 0 }
-  }
-  ]
-},
-
-{
-  path: '/form',
-  component: Layout,
-  children: [{
-    path: 'index',
-    name: 'Form',
-    component: () =>
-                import('@/views/form/index'),
-    meta: { title: 'Form', icon: 'form', visible: true, moduleId: 0 }
-  }]
-},
 // 客户权限
 {
   path: '/custom',
@@ -249,13 +215,13 @@ export const constantRouterMap = [{
                     import('@/views/system/role'),
     meta: { title: '角色权限', icon: 'login-user', visible: true, moduleId: 0 }
   },
-  {
-    path: 'tree',
-    name: 'UserProduct',
-    component: () =>
-                    import('@/views/tree/index'),
-    meta: { title: '用户产品', icon: 'similar-product', visible: true, moduleId: 0 }
-  },
+  // {
+  //   path: 'tree',
+  //   name: 'UserProduct',
+  //   component: () =>
+  //                   import('@/views/tree/index'),
+  //   meta: { title: '用户产品', icon: 'similar-product', visible: true, moduleId: 0 }
+  // },
   {
     path: 'trees',
     name: 'ModelConfigure',

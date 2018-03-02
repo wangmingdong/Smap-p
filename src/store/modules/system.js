@@ -100,7 +100,11 @@ const userManage = {
       return new Promise((resolve, reject) => {
         queryUser(userId).then(response => {
           const result = response.data
-          result.specInfoId = result.specInfoId.split(',')
+          if (result.specInfoId) {
+            result.specInfoId = result.specInfoId.split(',')
+          } else {
+            result.specInfoId = []
+          }
           resolve(result)
         }).catch(error => {
           reject(error)

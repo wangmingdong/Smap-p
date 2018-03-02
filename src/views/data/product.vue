@@ -82,10 +82,12 @@
     <div class="table-pagination">
       <el-pagination
         background
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next"
+        @size-change="changeSizePage"
         @current-change="currentPageChange"
         :current-page="currentPage"
         :page-size="pageSize"
+        :page-sizes="[10, 20, 50]"
         :total="dataTotal">
       </el-pagination>
     </div>
@@ -170,6 +172,11 @@ export default {
         this.productInfo = data
         this.productInfoModal = true
       })
+    },
+    // 切换每页显示条数
+    changeSizePage(size) {
+      this.pageSize = size
+      this.queryData()
     },
     // 分页
     currentPageChange(curPage) {

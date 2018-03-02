@@ -9,12 +9,12 @@
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
-        <router-link class="inlineBlock" to="/">
+        <!-- <router-link class="inlineBlock" to="/">
           <el-dropdown-item>
             主页
           </el-dropdown-item>
-        </router-link>
-        <el-dropdown-item divided>
+        </router-link> -->
+        <el-dropdown-item>
           <span @click="logout" style="display:block;">注销</span>
         </el-dropdown-item>
       </el-dropdown-menu>
