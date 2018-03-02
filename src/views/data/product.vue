@@ -34,7 +34,7 @@
         type="selection"
         width="55">
       </el-table-column>
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column align="center" label="ID" width="50">
         <template slot-scope="scope">
           {{scope.row.specProductId}}
         </template>
@@ -61,7 +61,7 @@
           <span>{{scope.row.releaseTime}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="数据状态" min-width="50" align="center">
+      <el-table-column label="数据状态" min-width="60" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.fileState | statusFilter">{{formatStatus(scope.row.fileState)}}</el-tag>
         </template>
