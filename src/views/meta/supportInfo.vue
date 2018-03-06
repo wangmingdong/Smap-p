@@ -1,113 +1,117 @@
 <template>
-  <el-form :model="userDetailInfo" ref="userInfoForm" label-width="100px">
+  <el-form :model="proDetailInfo" ref="editProForm" label-position="right" label-width="150px" label-suffix=":" :inline="true">
     <el-col :span="12">
-      <el-form-item label="登录账号：">
-        {{userDetailInfo.loginNo}}
+      <el-form-item label="产品名称">
+        {{proDetailInfo.specInfoName}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="登录密码：">
-        {{userDetailInfo.loginPwd}}
+      <el-form-item label="产品类型">
+        {{formatSelectOpts(paramOption.specInfo, proDetailInfo.specType)}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="角色选择：">
-        {{formatRole(userDetailInfo.roleId)}}
+      <el-form-item label="上级产品">
+        {{formatSelectOpts(paramOption.fatherInfo, proDetailInfo.fatherSpecId)}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="产品选择：">
-        {{formatProduct(userDetailInfo.specInfoId)}}
+      <el-form-item label="产品模式">
+        {{formatSelectOpts(paramOption.modeType, proDetailInfo.modeType)}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="邮箱：">
-        {{userDetailInfo.email}}
+      <el-form-item label="产品状态">
+        {{formatSelectOpts(paramOption.valid, proDetailInfo.valid)}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="账号状态：">
-        <el-tag :type="userDetailInfo.userStatus | statusFilter">{{formatStatus(userDetailInfo.userStatus)}}</el-tag>
+      <el-form-item label="产品类型（二级）">
+        {{formatSelectOpts(paramOption.specTypeSec, proDetailInfo.specTypeSec)}}
       </el-form-item>
     </el-col>
-    <el-col :span="24">
-      <el-form-item label="备注信息：">
-        {{userDetailInfo.note}}
+    <el-col :span="12">
+      <el-form-item label="访问上线（天）">
+        {{proDetailInfo.dayMaxDownTimes}}
+      </el-form-item>
+    </el-col>
+    <el-col :span="12">
+      <el-form-item label="访问上线（分钟）">
+        {{proDetailInfo.minMaxDownTimes}}
+      </el-form-item>
+    </el-col>
+    <el-col :span="12">
+      <el-form-item label="全局共享标志">
+        {{formatShareStatus(proDetailInfo.smapcFlag)}}
+      </el-form-item>
+    </el-col>
+    <el-col :span="12">
+      <el-form-item label="产品介绍">
+        {{proDetailInfo.specInfoDesc}}
       </el-form-item>
     </el-col>
   </el-form>
 </template>
 <script>
   export default {
-    name: 'userUpdateModal',
-    props: ['userDetailInfo'],
+    name: 'proUpdateModal',
+    props: ['proDetailInfo'],
     data() {
       return {
-        roleOptions: [],
-        productOptions: [],
-        accountStatusOption: [
-          { label: '有效', value: 1 },
-          { label: '无效', value: 0 }
-        ]
-      }
-    },
-    filters: {
-      statusFilter(status) {
-        const statusMap = {
-          0: 'gray',
-          1: 'success'
+        paramOption: {
+          modeType: [],
+          smapcFlag: [],
+          specInfo: [],
+          specTypeSec: [],
+          valid: [],
+          fatherInfo: []
         }
-        return statusMap[status]
       }
     },
     methods: {
-      // 格式化角色
-      formatRole(roleId) {
-        for (let i = 0; i < this.roleOptions.length; i++) {
-          if (this.roleOptions[i].roleId === roleId) {
-            return this.roleOptions[i].roleName
+      // 获取下拉参数
+      getParams() {
+        this.$store.dispatch('GetParamByPro').then(data => {
+          if (data) {
+            this.paramOption = data
+            this.paramOption.fatherInfo = this.paramOption.specInfo[parseInt(this.proDetailInfo.specType, 10) - 1].fatherSpecInfo
+          }
+        })
+      },
+      // 格式化下拉列表内容
+      formatSelectOpts(opts, data) {
+        for (let i = 0; i < opts.length; i++) {
+          if (opts[i].id === data) {
+            return opts[i].name
           }
         }
       },
-      // 格式化产品
-      formatProduct(proIds) {
-        const result = []
-        for (let i = 0; i < this.productOptions.length; i++) {
-          for (let j = 0; j < proIds.length; j++) {
-            if (this.productOptions[i].specInfoId === proIds[j]) {
-              result.push(this.productOptions[i].specInfoName)
-              break
-            }
-          }
-        }
-        return result.join(',')
-      },
-      getRoles() {
-        this.$store.dispatch('GetRolesByUser').then(data => {
-          this.roleOptions = data
-        })
-      },
-      getProducts() {
-        this.$store.dispatch('GetProByUser').then(data => {
-          this.productOptions = data
-        })
-      },
-      // 格式化状态
-      formatStatus(status) {
+      // 共享状态
+      formatShareStatus(status) {
         const statusObj = {
-          1: '有效',
-          0: '无效'
+          0: '不共享',
+          1: '共享'
         }
         return statusObj[status]
       },
+      // 切换产品类型
+      changeSpecType(data) {
+        this.paramOption.fatherInfo = this.paramOption.specInfo[parseInt(data, 10) - 1].fatherSpecInfo
+        if (this.paramOption.fatherInfo.length) {
+          this.proDetailInfo.fatherSpecId = this.paramOption.fatherInfo[0].id
+        }
+      },
+      changeFatherSpecName(data) {
+        this.$nextTick(() => {
+          this.proDetailInfo.fatherSpecId = data
+        })
+      },
       initForm() {
-        this.$refs['userInfoForm'].resetFields()
+        this.$refs['editProForm'].resetFields()
       }
     },
     created() {
-      this.getRoles()
-      this.getProducts()
+      this.getParams()
     }
   }
 </script>
-
