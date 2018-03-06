@@ -31,6 +31,7 @@
     <el-table :data="list" v-loading.body="listLoading" ref="productTable" empty-text="无数据"
      @select-all="selectAllData" @select="selectRowData" element-loading-text="加载中" border fit highlight-current-row>
       <el-table-column align="center"
+        :selectable="selectable"
         type="selection"
         width="55">
       </el-table-column>
@@ -143,6 +144,12 @@ export default {
     this.getProducts()
   },
   methods: {
+    selectable(row, index) {
+      if (row.fileState === 1) {
+        return true
+      }
+      return false
+    },
     getProducts() {
       this.$store.dispatch('GetProductForUser', this.$store.getters.userId).then(data => {
         this.productOptions = data
