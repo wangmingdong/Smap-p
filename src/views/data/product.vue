@@ -146,7 +146,11 @@ export default {
     getProducts() {
       this.$store.dispatch('GetProductForUser', this.$store.getters.userId).then(data => {
         this.productOptions = data
-        this.specInfoId = this.productOptions[0].specInfoId
+        if (this.productOptions && this.productOptions.length) {
+          this.specInfoId = this.productOptions[0].specInfoId
+        } else {
+          this.specInfoId = ''
+        }
         this.queryData()
       })
     },

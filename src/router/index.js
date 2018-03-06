@@ -69,14 +69,14 @@ export const constantRouterMap = [{
   }]
 },
 
-// 客户权限
+// 客户管理
 {
   path: '/custom',
   component: Layout,
   redirect: '/custom/user',
   name: 'CustomAuthority',
   isMain: true,
-  meta: { title: '客户权限', icon: 'customer', visible: true },
+  meta: { title: '客户管理', icon: 'customer', visible: true },
   children: [{
     path: 'user',
     name: 'UserManage',
@@ -114,19 +114,19 @@ export const constantRouterMap = [{
   }
   ]
 },
-  // 产品管理
+  // 元数据管理
 {
-  path: '/example',
+  path: '/meta',
   component: Layout,
-  redirect: '/example/table',
+  redirect: '/meta/support',
   name: 'ProductManage',
   isMain: true,
-  meta: { title: '产品管理', icon: 'product', visible: true },
+  meta: { title: '元数据管理', icon: 'product', visible: true },
   children: [{
-    path: 'table',
+    path: 'support',
     name: 'ProductMaintain',
     component: () =>
-                    import('@/views/table/index'),
+                    import('@/views/meta/support'),
     meta: { title: '产品维护', icon: 'repair', visible: true, moduleId: 0 }
   },
   {
@@ -138,14 +138,14 @@ export const constantRouterMap = [{
   }
   ]
 },
-  // 数据管理
+  // 产品数据
 {
   path: '/data',
   component: Layout,
   redirect: '/data/table',
   name: 'DataManage',
   isMain: true,
-  meta: { title: '数据管理', icon: 'data', visible: true },
+  meta: { title: '产品数据', icon: 'data', visible: true },
   children: [{
     path: 'table',
     name: 'DayProduce',
@@ -256,8 +256,7 @@ export const asyncRouterMap = [{
     name: 'permission',
     meta: {
       title: 'permission',
-      icon: 'lock',
-      roles: ['admin'] // or you can only set roles in sub nav
+      icon: 'lock'// or you can only set roles in sub nav
     }
   }]
 }]

@@ -37,7 +37,7 @@
     </el-col>
     <el-col :span="12">
       <el-form-item label="发布人员：">
-        {{formatStatus(productInfo.releaseName)}}
+        {{productInfo.releaseName}}
       </el-form-item>
     </el-col>
   </el-form>

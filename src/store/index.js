@@ -4,6 +4,7 @@ import app from './modules/app'
 import user from './modules/user'
 // import userManage from './modules/userManage'
 import system from './modules/system'
+import meta from './modules/meta'
 import data from './modules/data'
 import errorLog from './modules/errorLog'
 import permission from './modules/permission'
@@ -18,6 +19,7 @@ const store = new Vuex.Store({
     permission,
     user,
     // userManage,
+    meta,
     data,
     system
   },

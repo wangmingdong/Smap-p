@@ -29,7 +29,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import avatarImg from '@/assets/avatar.png'
+import avatarImg from '@/assets/avatar.jpg'
 
 export default {
   data() {

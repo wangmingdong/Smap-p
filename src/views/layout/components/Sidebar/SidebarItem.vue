@@ -59,6 +59,7 @@ export default {
   },
   mounted: function() {
     const routes = this.routes
+    console.log(routes)
     for (let i = 0; i < routes.length; i++) {
       if (routes[i].meta) {
         routes[i].meta.visible = false

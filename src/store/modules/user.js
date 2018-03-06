@@ -33,6 +33,9 @@ const user = {
     },
     SET_MODULE_OPTS: (state, moduleOpts) => {
       state.moduleOpts = moduleOpts
+    },
+    SET_MENU_OPTS: (state, menuOpts) => {
+      state.menuOpts = menuOpts
     }
   },
 
@@ -48,6 +51,7 @@ const user = {
             commit('SET_AUTHORITY', data.pmModules)
             commit('SET_NAME', data.loginNo)
             commit('SET_USER_ID', data.userId)
+            commit('SET_MENU_OPTS', data.pmModules)
             // 头像默认
             commit('SET_AVATAR', './src/assets/avatar.gif')
           }
@@ -66,6 +70,7 @@ const user = {
           commit('SET_AUTHORITY', data.pmModules)
           commit('SET_NAME', data.loginNo)
           commit('SET_USER_ID', data.userId)
+          commit('SET_MENU_OPTS', data.pmModules)
           // 头像默认
           commit('SET_AVATAR', './src/assets/avatar.gif')
           resolve(response)

@@ -11,8 +11,23 @@ router.beforeEach((to, from, next) => {
   if (getToken()) {
     if (to.path === '/login') {
       next({ path: '/' })
+      NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
       store.dispatch('GetInfo').then(res => { // 拉取用户信息
+        // console.log(router, store.getters.menuOpts)
+        // router.addRoutes([
+        //   {
+        //     path: '/test',
+        //     // name: 'test',
+        //     component: () =>
+        //                     import('@/views/tree/index'),
+        //     meta: { title: 'test', icon: 'control', visible: true, moduleId: 0 }
+        //   },
+
+        //   { path: '*', redirect: '/404', hidden: true }
+        // ])
+        // next()
+        // next({ ...to, replace: true })
         // 当页面跳转dashboard时重新跳转到第一个有权限页面
         const constantRouterMap = router.options.routes
         if (to.path === '/dashboard') {
@@ -37,7 +52,8 @@ router.beforeEach((to, from, next) => {
         } else {
           next()
         }
-      }).catch(() => {
+      }).catch((data) => {
+        console.log(data)
         store.dispatch('FedLogOut').then(() => {
           Message.error('验证失败,请重新登录')
           next({ path: '/login' })
@@ -45,6 +61,7 @@ router.beforeEach((to, from, next) => {
       })
     }
   } else {
+    // 在免登录白名单，直接进入
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
