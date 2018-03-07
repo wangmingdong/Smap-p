@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="proDetailInfo" ref="editProForm" label-position="right" label-width="150px" label-suffix=":" :inline="true">
+  <el-form :model="proDetailInfo" ref="editProForm" label-position="right" label-width="170px" label-suffix=":" :inline="true">
     <el-col :span="12">
       <el-form-item label="产品名称">
         {{proDetailInfo.specInfoName}}
@@ -31,12 +31,12 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="访问上限（天）">
+      <el-form-item label="访问权限（每天次数）">
         {{proDetailInfo.dayMaxDownTimes}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="访问上限（分钟）">
+      <el-form-item label="访问权限（每天分钟数）">
         {{proDetailInfo.minMaxDownTimes}}
       </el-form-item>
     </el-col>

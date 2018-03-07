@@ -14,9 +14,9 @@
             <el-select v-model="userType" @change="queryData" placeholder="请选择">
               <el-option
                 v-for="item in userTypeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </div>
@@ -27,9 +27,9 @@
             <el-select v-model="userValid" @change="queryData" placeholder="请选择">
               <el-option
                 v-for="item in userValidOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </div>
@@ -155,26 +155,8 @@ export default {
       userType: 1,
       userValid: 1,
       uNameStatus: 1,
-      userTypeOptions: [
-        {
-          label: '正式',
-          value: 1
-        },
-        {
-          label: '测试',
-          value: 2
-        }
-      ],
-      userValidOptions: [
-        {
-          label: '有效',
-          value: 1
-        },
-        {
-          label: '无效',
-          value: 0
-        }
-      ],
+      userTypeOptions: [],
+      userValidOptions: [],
       accountAddModal: false,
       accountUpdateModal: false,
       addAccountInfo: {
@@ -208,7 +190,7 @@ export default {
     }
   },
   created() {
-    this.queryData()
+    this.getParams()
     this.initUser()
   },
   methods: {
@@ -241,6 +223,17 @@ export default {
         2: '测试'
       }
       return typeObj[type]
+    },
+    getParams() {
+      this.$store.dispatch('GetParamsByCustom').then(data => {
+        console.log(data)
+        this.customOptions = data
+        this.userTypeOptions = this.customOptions.userType
+        this.userType = this.userTypeOptions[0].id
+        this.userValidOptions = this.customOptions.userValid
+        this.userValid = this.userValidOptions[0].id
+        this.queryData()
+      })
     },
     // 详情
     showInfo(index, row) {

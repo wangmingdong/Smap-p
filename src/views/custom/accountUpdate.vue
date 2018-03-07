@@ -6,8 +6,8 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="登录密码">
-        <el-input v-model="accountEditInfo.loginPwd" auto-complete="off" disabled></el-input>
+      <el-form-item label="登录密码" prop="loginPwd">
+        <el-input v-model="accountEditInfo.loginPwd" type="password" clearable></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
@@ -87,11 +87,20 @@
   export default {
     props: ['accountEditInfo'],
     data() {
+      const loginPwd = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('密码不能为空'))
+        }
+        if (value.length < 6) {
+          return callback(new Error('密码最少为6位'))
+        }
+        callback()
+      }
       const email = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('邮箱不能为空'))
         }
-        this.$store.dispatch('CheckRepeatForAccount', { email: this.accountEditInfo.email }).then(data => {
+        this.$store.dispatch('CheckRepeatForAccount', { email: this.accountEditInfo.email, userId: this.accountEditInfo.userId }).then(data => {
           if (parseInt(data.code, 10) === 200) {
             callback()
           } else {
@@ -106,6 +115,7 @@
           userValid: []
         },
         accountEditRule: {
+          loginPwd: [{ validator: loginPwd, trigger: 'blur', required: true }],
           email: [
             { validator: email, trigger: 'blur', required: true },
             { type: 'email', message: '请输入正确的邮箱地址', trigger: 'change blur' }

@@ -45,7 +45,8 @@ export function checkRepeatForAccount(param) {
     method: 'get',
     params: {
       loginNo: param.loginNo,
-      email: param.email
+      email: param.email,
+      userId: param.userId
     }
   })
 }

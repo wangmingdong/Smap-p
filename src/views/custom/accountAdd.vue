@@ -104,9 +104,11 @@
       const loginPwd = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('登录密码不能为空'))
-        } else {
-          callback()
         }
+        if (value.length < 6) {
+          return callback(new Error('密码最少为6位'))
+        }
+        callback()
       }
       const email = (rule, value, callback) => {
         if (!value) {

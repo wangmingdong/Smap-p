@@ -6,8 +6,8 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="登录密码：">
-        <el-input v-model="userEditInfo.loginPwd" auto-complete="off" disabled></el-input>
+      <el-form-item label="登录密码：" prop="loginPwd">
+        <el-input v-model="userEditInfo.loginPwd" type="password" auto-complete="off" clearable></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
@@ -63,6 +63,15 @@
     name: 'userUpdateModal',
     props: ['userEditInfo'],
     data() {
+      const loginPwd = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('密码不能为空'))
+        }
+        if (value.length < 6) {
+          return callback(new Error('密码最少为6位'))
+        }
+        callback()
+      }
       const email = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('邮箱不能为空'))
@@ -83,6 +92,7 @@
           { label: '无效', value: '0' }
         ],
         userAddRule: {
+          loginPwd: [{ validator: loginPwd, trigger: 'blur', required: true }],
           email: [
             { validator: email, trigger: 'blur', required: true },
             { type: 'email', message: '请输入正确的邮箱地址', trigger: 'change' }

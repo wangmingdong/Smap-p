@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="proEditInfo" :rules="proEditRule" ref="editProForm" label-position="left" label-width="150px" label-suffix=":" :inline="true">
+  <el-form :model="proEditInfo" :rules="proEditRule" ref="editProForm" label-position="left" label-width="170px" label-suffix=":" :inline="true">
     <el-col :span="12">
       <el-form-item label="产品名称" prop="specInfoName">
         <el-input v-model="proEditInfo.specInfoName"></el-input>
@@ -66,12 +66,12 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="访问上限（天）">
+      <el-form-item label="访问权限（每天次数）">
         <el-input-number v-model="proEditInfo.dayMaxDownTimes" controls-position="right" :min="0"></el-input-number>
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="访问上限（分钟）">
+      <el-form-item label="访问权限（每天分钟数）">
         <el-input-number v-model="proEditInfo.minMaxDownTimes" controls-position="right" :min="0"></el-input-number>
       </el-form-item>
     </el-col>
