@@ -8,12 +8,14 @@ $simpleGrayBoxShadow: inset 0 0 5px rgba(0,0,0,0.2);
     display: flex;
   }
   .table-btn-group {
+    white-space: nowrap;
   }
 }
 .form-container {
   display: flex;
   align-items: center;
   margin: 0 5px;
+  white-space: nowrap;
 }
 .table-pagination {
   display: flex;

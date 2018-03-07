@@ -1,17 +1,17 @@
 <template>
   <el-form :model="userAddInfo" :rules="userAddRule" ref="addUserForm" label-width="100px">
     <el-col :span="12">
-      <el-form-item label="登录账号" prop="loginNo">
+      <el-form-item label="登录账号：" prop="loginNo">
         <el-input v-model="userAddInfo.loginNo"></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="登录密码">
+      <el-form-item label="登录密码：">
         <el-input v-model="userAddInfo.loginPwd" auto-complete="off"></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="角色选择">
+      <el-form-item label="角色选择：">
         <el-select v-model="userAddInfo.roleId" placeholder="请选择">
           <el-option
             v-for="item in roleOptions"
@@ -23,7 +23,7 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="产品选择">
+      <el-form-item label="产品选择：">
         <el-select v-model="userAddInfo.specInfoId" multiple placeholder="请选择">
           <el-option
             v-for="item in productOptions"
@@ -35,12 +35,12 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item label="邮箱：" prop="email">
         <el-input v-model="userAddInfo.email"></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="账号状态">
+      <el-form-item label="账号状态：">
         <el-select v-model="userAddInfo.userStatus" placeholder="请选择">
           <el-option
             v-for="item in accountStatusOption"
@@ -52,7 +52,7 @@
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="备注信息">
+      <el-form-item label="备注信息：">
         <el-input type="textarea" v-model="userAddInfo.note"></el-input>
       </el-form-item>
     </el-col>
@@ -117,9 +117,9 @@
       getProducts() {
         this.$store.dispatch('GetProByUser').then(data => {
           this.productOptions = data
-          if (this.productOptions.length) {
-            this.userAddInfo.specInfoId = [this.productOptions[0].specInfoId]
-          }
+          // if (this.productOptions.length) {
+          //   this.userAddInfo.specInfoId = [this.productOptions[0].specInfoId]
+          // }
         })
       },
       initForm() {

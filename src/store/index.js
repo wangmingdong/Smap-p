@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import app from './modules/app'
 import user from './modules/user'
-// import userManage from './modules/userManage'
+import custom from './modules/custom'
 import system from './modules/system'
 import meta from './modules/meta'
 import data from './modules/data'
@@ -18,7 +18,7 @@ const store = new Vuex.Store({
     errorLog,
     permission,
     user,
-    // userManage,
+    custom,
     meta,
     data,
     system

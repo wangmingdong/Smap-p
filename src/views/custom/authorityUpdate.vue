@@ -1,17 +1,17 @@
 <template>
   <el-form :model="userEditInfo" :rules="userAddRule" ref="editUserForm" label-width="100px">
     <el-col :span="12">
-      <el-form-item label="登录账号">
+      <el-form-item label="登录账号：">
         <el-input v-model="userEditInfo.loginNo" disabled></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="登录密码">
+      <el-form-item label="登录密码：">
         <el-input v-model="userEditInfo.loginPwd" auto-complete="off" disabled></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="角色选择">
+      <el-form-item label="角色选择：">
         <el-select v-model="userEditInfo.roleId" placeholder="请选择">
           <el-option
             v-for="item in roleOptions"
@@ -23,7 +23,7 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="产品选择">
+      <el-form-item label="产品选择：">
         <el-select v-model="userEditInfo.specInfoId" multiple placeholder="请选择">
           <el-option
             v-for="item in productOptions"
@@ -35,12 +35,12 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item label="邮箱：" prop="email">
         <el-input v-model="userEditInfo.email"></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="账号状态">
+      <el-form-item label="账号状态：">
         <el-select v-model="userEditInfo.userStatus" placeholder="请选择">
           <el-option
             v-for="item in accountStatusOption"
@@ -52,7 +52,7 @@
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="备注信息">
+      <el-form-item label="备注信息：">
         <el-input type="textarea" v-model="userEditInfo.note"></el-input>
       </el-form-item>
     </el-col>

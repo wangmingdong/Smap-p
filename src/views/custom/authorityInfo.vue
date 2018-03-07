@@ -1,37 +1,37 @@
 <template>
   <el-form :model="userDetailInfo" ref="userInfoForm" label-width="100px">
     <el-col :span="12">
-      <el-form-item label="登录账号">
+      <el-form-item label="登录账号：">
         {{userDetailInfo.loginNo}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="登录密码">
+      <el-form-item label="登录密码：">
         {{userDetailInfo.loginPwd}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="角色选择">
+      <el-form-item label="角色选择：">
         {{formatRole(userDetailInfo.roleId)}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="产品选择">
+      <el-form-item label="产品选择：">
         {{formatProduct(userDetailInfo.specInfoId)}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="邮箱">
+      <el-form-item label="邮箱：">
         {{userDetailInfo.email}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="账号状态">
-        {{formatStatus(userDetailInfo.userStatus)}}
+      <el-form-item label="账号状态：">
+        <el-tag :type="userDetailInfo.userStatus | statusFilter">{{formatStatus(userDetailInfo.userStatus)}}</el-tag>
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="备注信息">
+      <el-form-item label="备注信息：">
         {{userDetailInfo.note}}
       </el-form-item>
     </el-col>
@@ -49,6 +49,15 @@
           { label: '有效', value: 1 },
           { label: '无效', value: 0 }
         ]
+      }
+    },
+    filters: {
+      statusFilter(status) {
+        const statusMap = {
+          0: 'gray',
+          1: 'success'
+        }
+        return statusMap[status]
       }
     },
     methods: {

@@ -23,10 +23,10 @@
         </div>
       </div>
       <div class="table-btn-group">
-        <el-button v-if="moduleOpts.indexOf('3') > -1" @click="queryData">查询</el-button>
-        <el-button type="primary" v-if="moduleOpts.indexOf('1') > -1" @click="addUser">新增</el-button>
-        <el-button v-if="moduleOpts.indexOf('4') > -1" @click="openUpdateUser">修改</el-button>
-        <el-button type="danger" v-if="moduleOpts.indexOf('2') > -1" @click="deleteUsers">删除</el-button>
+        <el-button v-if="moduleOpts && moduleOpts.indexOf('3') > -1" @click="queryData">查询</el-button>
+        <el-button type="primary" v-if="moduleOpts && moduleOpts.indexOf('1') > -1" @click="addUser">新增</el-button>
+        <el-button v-if="moduleOpts && moduleOpts.indexOf('4') > -1" @click="openUpdateUser">修改</el-button>
+        <el-button type="danger" v-if="moduleOpts && moduleOpts.indexOf('2') > -1" @click="deleteUsers">删除</el-button>
       </div>
     </div>
     <el-table :data="list" v-loading.body="listLoading" empty-text="无数据" @selection-change="selectRowData" element-loading-text="加载中" border fit highlight-current-row>
@@ -56,13 +56,13 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="创建时间" min-width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time"></i>
+          <i class="el-icon-time" v-if="scope.row.createDate"></i>
           <span>{{scope.row.createDate}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="最后登录时间" min-width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time"></i>
+          <i class="el-icon-time" v-if="scope.row.lastLoginTime"></i>
           <span>{{scope.row.lastLoginTime}}</span>
         </template>
       </el-table-column>
@@ -77,10 +77,12 @@
     <div class="table-pagination">
       <el-pagination
         background
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next"
+        @size-change="changeSizePage"
         @current-change="currentPageChange"
         :current-page="currentPage"
         :page-size="pageSize"
+        :page-sizes="[10, 20, 50]"
         :total="dataTotal">
       </el-pagination>
     </div>
@@ -113,10 +115,9 @@
 <script>
 // import { getList } from '@/api/table'
 import { mapGetters } from 'vuex'
-import userAddForm from '@/views/custom/userAdd.vue'
-import userUpdateForm from '@/views/custom/userUpdate.vue'
-import userInfoForm from '@/views/custom/userInfo.vue'
-import '@/styles/main.scss'
+import userAddForm from '@/views/system/userAdd.vue'
+import userUpdateForm from '@/views/system/userUpdate.vue'
+import userInfoForm from '@/views/system/userInfo.vue'
 
 export default {
   components: {
@@ -129,7 +130,7 @@ export default {
       list: null,
       listLoading: true,
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 20,
       dataTotal: 0,
       searchText: '',
       uNameStatus: 1,
@@ -197,6 +198,11 @@ export default {
         this.userInfo = data
         this.userInfoModal = true
       })
+    },
+    // 切换每页显示条数
+    changeSizePage(size) {
+      this.pageSize = size
+      this.queryData()
     },
     // 分页
     currentPageChange(curPage) {

@@ -69,6 +69,38 @@ export const constantRouterMap = [{
   }]
 },
 
+// 产品数据
+{
+  path: '/data',
+  component: Layout,
+  redirect: '/data/table',
+  name: 'DataManage',
+  isMain: true,
+  meta: { title: '产品数据', icon: 'data', visible: true },
+  children: [{
+    path: 'table',
+    name: 'DayProduce',
+    component: () =>
+                    import('@/views/table/index'),
+    meta: { title: '日出品', icon: 'sun', visible: true, moduleId: 0 }
+  },
+  {
+    path: 'product',
+    name: 'NormalProduct',
+    component: () =>
+                    import('@/views/data/product'),
+    meta: { title: '常规产品', icon: 'product-features', visible: true, moduleId: 0 }
+  },
+  {
+    path: 'tree',
+    name: 'RoadConstruction',
+    component: () =>
+                    import('@/views/tree/index'),
+    meta: { title: '施工道路', icon: 'road', visible: true, moduleId: 0 }
+  }
+  ]
+},
+
 // 客户管理
 {
   path: '/custom',
@@ -81,15 +113,15 @@ export const constantRouterMap = [{
     path: 'user',
     name: 'UserManage',
     component: () =>
-                  import('@/views/custom/role'),
-    meta: { title: '用户管理', icon: 'user', visible: true, moduleId: 0 }
+                  import('@/views/custom/account'),
+    meta: { title: '客户账号', icon: 'user', visible: true, moduleId: 0 }
   },
   {
-    path: 'role',
+    path: 'authority',
     name: 'RoleManage',
     component: () =>
-                  import('@/views/custom/role'),
-    meta: { title: '角色管理', icon: 'role', visible: true, moduleId: 0 }
+                  import('@/views/custom/authority'),
+    meta: { title: '客户权限', icon: 'role', visible: true, moduleId: 0 }
   },
   {
     path: 'tree',
@@ -135,37 +167,6 @@ export const constantRouterMap = [{
     component: () =>
                     import('@/views/tree/index'),
     meta: { title: '限流控制', icon: 'control', visible: true, moduleId: 0 }
-  }
-  ]
-},
-  // 产品数据
-{
-  path: '/data',
-  component: Layout,
-  redirect: '/data/table',
-  name: 'DataManage',
-  isMain: true,
-  meta: { title: '产品数据', icon: 'data', visible: true },
-  children: [{
-    path: 'table',
-    name: 'DayProduce',
-    component: () =>
-                    import('@/views/table/index'),
-    meta: { title: '日出品', icon: 'sun', visible: true, moduleId: 0 }
-  },
-  {
-    path: 'product',
-    name: 'NormalProduct',
-    component: () =>
-                    import('@/views/data/product'),
-    meta: { title: '常规产品', icon: 'product-features', visible: true, moduleId: 0 }
-  },
-  {
-    path: 'tree',
-    name: 'RoadConstruction',
-    component: () =>
-                    import('@/views/tree/index'),
-    meta: { title: '施工道路', icon: 'road', visible: true, moduleId: 0 }
   }
   ]
 },

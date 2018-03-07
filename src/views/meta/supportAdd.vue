@@ -66,12 +66,12 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="访问上线（天）">
+      <el-form-item label="访问上限（天）">
         <el-input-number v-model="proAddInfo.dayMaxDownTimes" controls-position="right" :min="0"></el-input-number>
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="访问上线（分钟）">
+      <el-form-item label="访问上限（分钟）">
         <el-input-number v-model="proAddInfo.minMaxDownTimes" controls-position="right" :min="0"></el-input-number>
       </el-form-item>
     </el-col>
