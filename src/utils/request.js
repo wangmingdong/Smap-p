@@ -39,7 +39,7 @@ service.interceptors.response.use(
          * code为非200是抛错
          */
     const res = response.data
-    if (parseInt(res.code, 10) !== 200 && parseInt(res.code, 10) !== 300) {
+    if (parseInt(res.code, 10) !== 200) {
       Message({
         message: res.msg,
         type: 'error',
