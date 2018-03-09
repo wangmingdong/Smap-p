@@ -17,7 +17,9 @@
     </el-col>
     <el-col :span="12">
       <el-form-item label="md5校验码：">
-        {{productInfo.fileMD5}}
+        <el-tooltip placement="top" :content="productInfo.fileMD5">
+          <span>{{productInfo.fileMD5}}</span>
+        </el-tooltip>
       </el-form-item>
     </el-col>
     <el-col :span="12">
