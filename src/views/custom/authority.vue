@@ -107,29 +107,16 @@ export default {
       dataTotal: 0,
       searchText: '',
       uNameStatus: 1,
-      authorityAddModal: false,
-      authorityUpdateModal: false,
       addAuthorityInfo: {
         loginNo: '',
         specInfoId: '',
         selectProType: []
       },
-      editAuthorityInfo: null,
       multipleSelection: [],
       authorityInfoModal: false,
       authorityInfoList: [],
       proInfoModal: false,
       proInfo: null
-    }
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        1: 'success',
-        2: 'gray',
-        3: 'danger'
-      }
-      return statusMap[status]
     }
   },
   created() {
