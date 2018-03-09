@@ -55,9 +55,9 @@ const userManage = {
     },
 
     // 查询产品
-    QueryPro({ commit }, userId) {
+    QueryPro({ commit }, specInfoId) {
       return new Promise((resolve, reject) => {
-        queryPro(userId).then(response => {
+        queryPro(specInfoId).then(response => {
           const result = response.data
           resolve(result)
         }).catch(error => {

@@ -11,11 +11,13 @@ import {
   deleteCustom,
   // 权限
   getAuthorityList,
-  checkRepeatForAuthority,
   queryAuthority,
   createAuthority,
   updateAuthority,
-  deleteAuthority
+  deleteAuthority,
+  getAuthorityParams,
+  getSpecTypeParamsForPro,
+  checkRepeatForAuthority
 } from '@/api/custom'
 
 const userManage = {
@@ -119,9 +121,6 @@ const userManage = {
       return new Promise((resolve, reject) => {
         getAuthorityList(param).then(response => {
           const data = response.data
-          if (data.roleModules) {
-            data.roleModules = data.roleModules.split(',')
-          }
           resolve(data)
         }).catch(error => {
           reject(error)
@@ -132,9 +131,6 @@ const userManage = {
     // 新增权限
     CreateAuthority({ commit }, param) {
       return new Promise((resolve, reject) => {
-        // if (param.roleModules.length) {
-        //   param.roleModules = param.roleModules.join(',')
-        // }
         createAuthority(param).then(response => {
           resolve(response)
         }).catch(error => {
@@ -146,10 +142,6 @@ const userManage = {
     // 修改权限
     UpdateAuthority({ commit }, param) {
       return new Promise((resolve, reject) => {
-        // if (param.roleModules.length) {
-        //   param.roleModules = param.roleModules.join(',')
-        // }
-        delete param.roleName
         updateAuthority(param).then(response => {
           resolve(response)
         }).catch(error => {
@@ -170,13 +162,10 @@ const userManage = {
     },
 
     // 查询权限详情
-    QueryAuthority({ commit }, roleId) {
+    QueryAuthority({ commit }, customerId) {
       return new Promise((resolve, reject) => {
-        queryAuthority(roleId).then(response => {
+        queryAuthority(customerId).then(response => {
           const result = response.data
-          // if (result.roleModules) {
-          //   result.roleModules = result.roleModules.split(',')
-          // }
           resolve(result)
         }).catch(error => {
           reject(error)
@@ -184,10 +173,34 @@ const userManage = {
       })
     },
 
-    // 权限重复性查询
-    CheckRepeatForAuthority({ commit }, roleName) {
+    // 获取文件类型，产品列表
+    GetAuthorityParams({ commit }) {
       return new Promise((resolve, reject) => {
-        checkRepeatForAuthority(roleName).then(response => {
+        getAuthorityParams().then(response => {
+          const result = response.data
+          resolve(result)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 查询产品类型和模式值域
+    GetSpecTypeParamsForPro({ commit }) {
+      return new Promise((resolve, reject) => {
+        getSpecTypeParamsForPro().then(response => {
+          const result = response.data
+          resolve(result)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 检查客户权限已配置
+    CheckRepeatForAuthority({ commit }, param) {
+      return new Promise((resolve, reject) => {
+        checkRepeatForAuthority(param).then(response => {
           resolve(response)
         }).catch(error => {
           reject(error)

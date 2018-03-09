@@ -121,7 +121,22 @@ export const constantRouterMap = [{
     name: 'RoleManage',
     component: () =>
                   import('@/views/custom/authority'),
-    meta: { title: '客户权限', icon: 'role', visible: true, moduleId: 0 }
+    meta: { title: '客户权限', icon: 'role', visible: true, moduleId: 0, child: 'rolePrivilege' }
+    // children: [{
+    //   path: 'privilege',
+    //   name: 'rolePrivilege',
+    //   hidden: true,
+    //   component: () =>
+    //     import('@/views/custom/authorityEdit'),
+    //   meta: { title: '客户权限分配', icon: 'role', visible: false, moduleId: 0 }
+    // }]
+  },
+  {
+    path: 'privilege/:id',
+    name: 'rolePrivilege',
+    component: () =>
+      import('@/views/custom/authorityEdit'),
+    meta: { title: '客户权限分配', icon: 'role', visible: false, moduleId: 0, parent: 'RoleManage', rootParent: 'CustomAuthority' }
   },
   {
     path: 'tree',

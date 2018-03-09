@@ -1,112 +1,66 @@
 <template>
-  <el-form :model="userDetailInfo" ref="userInfoForm" label-width="100px">
-    <el-col :span="12">
-      <el-form-item label="登录账号：">
-        {{userDetailInfo.loginNo}}
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="登录密码：">
-        {{userDetailInfo.loginPwd}}
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="角色选择：">
-        {{formatRole(userDetailInfo.roleId)}}
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="产品选择：">
-        {{formatProduct(userDetailInfo.specInfoId)}}
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="邮箱：">
-        {{userDetailInfo.email}}
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="账号状态：">
-        <el-tag :type="userDetailInfo.userStatus | statusFilter">{{formatStatus(userDetailInfo.userStatus)}}</el-tag>
-      </el-form-item>
-    </el-col>
-    <el-col :span="24">
-      <el-form-item label="备注信息：">
-        {{userDetailInfo.note}}
-      </el-form-item>
-    </el-col>
+  <el-form ref="authorityInfoForm" label-width="100px" label-suffix=":">
+    <el-card class="box-card" v-for="item in authorityList" :key="item.userSpecModeId">
+      <el-col :span="12">
+        <el-form-item label="登录账号">
+          {{item.customerName}}
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="产品名称">
+          {{item.specInfoName}}
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="产品类型">
+          <span v-for="spec in specTypeOptions.specType" :key="spec.id" v-if="spec.id === item.specType">
+            {{spec.name}}
+          </span>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="产品模式">
+          <span v-for="mode in specTypeOptions.modeType" :key="mode.id" v-if="mode.id === item.specType">
+            {{mode.name}}
+          </span>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="授权时间">
+          {{item.authorizeTime}}
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="授权人员">
+          {{item.authorizeName}}
+        </el-form-item>
+      </el-col>
+    </el-card>
   </el-form>
 </template>
 <script>
   export default {
-    name: 'userUpdateModal',
-    props: ['userDetailInfo'],
+    props: ['authorityList'],
     data() {
       return {
-        roleOptions: [],
-        productOptions: [],
-        accountStatusOption: [
-          { label: '有效', value: 1 },
-          { label: '无效', value: 0 }
-        ]
-      }
-    },
-    filters: {
-      statusFilter(status) {
-        const statusMap = {
-          0: 'gray',
-          1: 'success'
+        specTypeOptions: {
+          modeType: [],
+          specType: []
         }
-        return statusMap[status]
       }
     },
     methods: {
-      // 格式化角色
-      formatRole(roleId) {
-        for (let i = 0; i < this.roleOptions.length; i++) {
-          if (this.roleOptions[i].roleId === roleId) {
-            return this.roleOptions[i].roleName
-          }
-        }
-      },
-      // 格式化产品
-      formatProduct(proIds) {
-        const result = []
-        for (let i = 0; i < this.productOptions.length; i++) {
-          for (let j = 0; j < proIds.length; j++) {
-            if (this.productOptions[i].specInfoId === proIds[j]) {
-              result.push(this.productOptions[i].specInfoName)
-              break
-            }
-          }
-        }
-        return result.join(',')
-      },
-      getRoles() {
-        this.$store.dispatch('GetRolesByUser').then(data => {
-          this.roleOptions = data
+      getParams() {
+        this.$store.dispatch('GetSpecTypeParamsForPro').then(data => {
+          this.specTypeOptions = data
         })
-      },
-      getProducts() {
-        this.$store.dispatch('GetProByUser').then(data => {
-          this.productOptions = data
-        })
-      },
-      // 格式化状态
-      formatStatus(status) {
-        const statusObj = {
-          1: '有效',
-          0: '无效'
-        }
-        return statusObj[status]
       },
       initForm() {
-        this.$refs['userInfoForm'].resetFields()
+        this.$refs['authorityInfoForm'].resetFields()
       }
     },
     created() {
-      this.getRoles()
-      this.getProducts()
+      this.getParams()
     }
   }
 </script>

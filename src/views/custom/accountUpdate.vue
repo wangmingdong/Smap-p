@@ -2,17 +2,17 @@
   <el-form :model="accountEditInfo" :rules="accountEditRule" ref="editAccountForm" label-suffix=":" label-width="110px" :inline="true">
     <el-col :span="12">
       <el-form-item label="登录账号">
-        <el-input v-model="accountEditInfo.loginNo" disabled></el-input>
+        <el-input v-model="accountEditInfo.loginNo" style="width: 190px" disabled></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
       <el-form-item label="登录密码" prop="loginPwd">
-        <el-input v-model="accountEditInfo.loginPwd" type="password" clearable></el-input>
+        <el-input v-model="accountEditInfo.loginPwd" style="width: 190px" type="password" clearable></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
       <el-form-item label="账号类型">
-        <el-select v-model="accountEditInfo.userType" disabled placeholder="请选择">
+        <el-select v-model="accountEditInfo.userType" style="width: 190px" disabled placeholder="请选择">
           <el-option
             v-for="item in customOptions.userType"
             :key="item.id"
@@ -24,7 +24,7 @@
     </el-col>
     <el-col :span="12">
       <el-form-item label="账号状态">
-        <el-select v-model="accountEditInfo.userValid" placeholder="请选择">
+        <el-select v-model="accountEditInfo.userValid" style="width: 190px" placeholder="请选择">
           <el-option
             v-for="item in customOptions.userValid"
             :key="item.id"
@@ -36,12 +36,12 @@
     </el-col>
     <el-col :span="12">
       <el-form-item label="秘钥">
-        <el-input v-model="accountEditInfo.userKey" disabled></el-input>
+        <el-input v-model="accountEditInfo.userKey" style="width: 190px" disabled></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
       <el-form-item label="秘钥有效性">
-        <el-select v-model="accountEditInfo.keyValid" placeholder="请选择">
+        <el-select v-model="accountEditInfo.keyValid" style="width: 190px" placeholder="请选择">
           <el-option
             v-for="item in customOptions.keyValid"
             :key="item.id"
@@ -55,6 +55,7 @@
       <el-form-item label="秘钥开始时间">
         <el-date-picker
           v-model="accountEditInfo.keyBeginDate"
+           style="width: 190px"
           type="datetime"
           value-format="yyyy-MM-dd hh:mm:ss"
           placeholder="秘钥开始时间">
@@ -65,6 +66,7 @@
       <el-form-item label="秘钥结束时间">
         <el-date-picker
           v-model="accountEditInfo.keyEndDate"
+           style="width: 190px"
           type="datetime"
           value-format="yyyy-MM-dd hh:mm:ss"
           placeholder="秘钥结束时间">
@@ -73,12 +75,12 @@
     </el-col>
     <el-col :span="12">
       <el-form-item label="邮箱" prop="email">
-        <el-input v-model="accountEditInfo.email"></el-input>
+        <el-input v-model="accountEditInfo.email" style="width: 190px"></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
       <el-form-item label="备注信息">
-        <el-input v-model="accountEditInfo.note"></el-input>
+        <el-input v-model="accountEditInfo.note" style="width: 190px"></el-input>
       </el-form-item>
     </el-col>
   </el-form>

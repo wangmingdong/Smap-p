@@ -9,7 +9,7 @@
           </el-menu-item>
         </router-link>
 
-        <el-submenu v-else :index="item.name||item.path" :key="item.name" v-show="item.meta && item.meta.visible">
+        <el-submenu v-else :default-active="1" :index="item.name||item.path" :key="item.name" v-show="item.meta && item.meta.visible" :class="item.meta.hideIcon ? 'icon-hide': ''">
           <template slot="title">
             <svg-icon v-if="item.meta&&item.meta.icon" :icon-class="item.meta.icon"></svg-icon>
             <span v-if="item.meta&&item.meta.title">{{item.meta.title}}</span>
@@ -56,10 +56,15 @@ export default {
         // this.sideLoading = false
       })
     }
+    // 对于有三级的二级菜单点击
+    // selectSubMenu(item) {
+    //   if (item.meta.hideIcon) {
+    //     this.$router.push(item.path)
+    //   }
+    // }
   },
   mounted: function() {
     const routes = this.routes
-    console.log(routes)
     for (let i = 0; i < routes.length; i++) {
       if (routes[i].meta) {
         routes[i].meta.visible = false

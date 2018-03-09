@@ -1,113 +1,74 @@
 <template>
-  <el-form :model="userEditInfo" :rules="userAddRule" ref="editUserForm" label-width="100px">
+  <el-form :model="authorityEditInfo" ref="editAuthorityForm" label-width="150px">
     <el-col :span="12">
       <el-form-item label="登录账号：">
-        <el-input v-model="userEditInfo.loginNo" disabled></el-input>
+        <el-input v-model="authorityEditInfo.customerName" disabled></el-input>
       </el-form-item>
     </el-col>
-    <el-col :span="12">
-      <el-form-item label="登录密码：">
-        <el-input v-model="userEditInfo.loginPwd" auto-complete="off" disabled></el-input>
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="角色选择：">
-        <el-select v-model="userEditInfo.roleId" placeholder="请选择">
+    <el-col :span="24">
+      <el-form-item label="产品类型：">
+        <el-select v-model="authorityEditInfo.specType" @change="changeSpecType" placeholder="请选择">
           <el-option
-            v-for="item in roleOptions"
-            :key="item.roleId"
-            :label="item.roleName"
-            :value="item.roleId">
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="产品选择：">
-        <el-select v-model="userEditInfo.specInfoId" multiple placeholder="请选择">
-          <el-option
-            v-for="item in productOptions"
-            :key="item.specInfoId"
-            :label="item.specInfoName"
-            :value="item.specInfoId">
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="邮箱：" prop="email">
-        <el-input v-model="userEditInfo.email"></el-input>
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="账号状态：">
-        <el-select v-model="userEditInfo.userStatus" placeholder="请选择">
-          <el-option
-            v-for="item in accountStatusOption"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in proTypeOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
           </el-option>
         </el-select>
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="备注信息：">
-        <el-input type="textarea" v-model="userEditInfo.note"></el-input>
+      <el-form-item label="产品列表：">
+        <el-select v-model="authorityEditInfo.specInfoId" placeholder="请选择">
+          <el-option
+            v-for="item in productOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
       </el-form-item>
     </el-col>
   </el-form>
 </template>
 <script>
   export default {
-    name: 'userUpdateModal',
-    props: ['userEditInfo'],
+    name: 'authorityUpdateModal',
+    props: ['authorityEditInfo'],
     data() {
-      const email = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('邮箱不能为空'))
-        }
-        this.$store.dispatch('CheckRepeat', { email: value, userId: this.userEditInfo.userId }).then(data => {
-          if (parseInt(data.code, 10) === 200) {
-            callback()
-          } else {
-            callback(new Error(data.msg))
-          }
-        })
-      }
       return {
-        roleOptions: [],
-        productOptions: [],
-        accountStatusOption: [
-          { label: '有效', value: '1' },
-          { label: '无效', value: '0' }
-        ],
-        userAddRule: {
-          email: [
-            { validator: email, trigger: 'blur', required: true },
-            { type: 'email', message: '请输入正确的邮箱地址', trigger: 'change' }
-          ]
-        }
+        proTypeOptions: [],
+        productOptions: []
       }
     },
     methods: {
-      getRoles() {
-        this.$store.dispatch('GetRolesByUser').then(data => {
-          this.roleOptions = data
-        })
+      // 切换产品类型
+      changeSpecType(data) {
+        for (let i = 0; i < this.proTypeOptions.length; i++) {
+          if (this.proTypeOptions[i].id === data) {
+            this.productOptions = this.proTypeOptions[i].specInfo
+            this.authorityEditInfo.specInfoId = this.productOptions[0].id
+          }
+        }
       },
-      getProducts() {
-        this.$store.dispatch('GetProByUser').then(data => {
-          this.productOptions = data
+      getParams() {
+        this.$store.dispatch('GetAuthorityParams').then(data => {
+          this.proTypeOptions = data.specType
+          if (this.authorityEditInfo.specType) {
+            for (let i = 0; i < this.proTypeOptions.length; i++) {
+              if (this.proTypeOptions[i].id === this.authorityEditInfo.specType) {
+                this.productOptions = this.proTypeOptions[i].specInfo
+              }
+            }
+          }
         })
       },
       initForm() {
-        this.$refs['editUserForm'].resetFields()
+        this.$refs['editAuthorityForm'].resetFields()
       }
     },
     created() {
-      this.getRoles()
-      this.getProducts()
+      this.getParams()
     }
   }
 </script>

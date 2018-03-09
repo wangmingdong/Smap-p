@@ -31,12 +31,12 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="访问权限（每天次数）">
+      <el-form-item label="访问上限（每天次数）">
         {{proDetailInfo.dayMaxDownTimes}}
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="访问权限（每天分钟数）">
+      <el-form-item label="访问上限（每天分钟数）">
         {{proDetailInfo.minMaxDownTimes}}
       </el-form-item>
     </el-col>

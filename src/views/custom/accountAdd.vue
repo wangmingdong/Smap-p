@@ -2,17 +2,17 @@
   <el-form :model="accountAddInfo" :rules="accountAddRule" ref="addAccountForm" label-suffix=":" label-width="110px" :inline="true">
     <el-col :span="12">
       <el-form-item label="登录账号" prop="loginNo">
-        <el-input v-model="accountAddInfo.loginNo"></el-input>
+        <el-input v-model="accountAddInfo.loginNo" style="width: 190px"></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
       <el-form-item label="登录密码" prop="loginPwd">
-        <el-input v-model="accountAddInfo.loginPwd" auto-complete="off"></el-input>
+        <el-input v-model="accountAddInfo.loginPwd" style="width: 190px" auto-complete="off"></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
       <el-form-item label="账号类型">
-        <el-select v-model="accountAddInfo.userType" placeholder="请选择">
+        <el-select v-model="accountAddInfo.userType" style="width: 190px" placeholder="请选择">
           <el-option
             v-for="item in customOptions.userType"
             :key="item.id"
@@ -24,7 +24,7 @@
     </el-col>
     <el-col :span="12">
       <el-form-item label="账号状态">
-        <el-select v-model="accountAddInfo.userValid" placeholder="请选择">
+        <el-select v-model="accountAddInfo.userValid" style="width: 190px" placeholder="请选择">
           <el-option
             v-for="item in customOptions.userValid"
             :key="item.id"
@@ -35,15 +35,15 @@
       </el-form-item>
     </el-col>
     <el-col :span="12">
-      <el-form-item label="秘钥">
-        <el-input type="text" v-model="accountAddInfo.userKey">
+      <el-form-item label="秘钥" prop="userKey">
+        <el-input type="text" v-model="accountAddInfo.userKey" style="width: 190px">
           <el-button slot="append" @click="createKey">生成</el-button>
         </el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
       <el-form-item label="秘钥有效性">
-        <el-select v-model="accountAddInfo.keyValid" placeholder="请选择">
+        <el-select v-model="accountAddInfo.keyValid" style="width: 190px" placeholder="请选择">
           <el-option
             v-for="item in customOptions.keyValid"
             :key="item.id"
@@ -58,6 +58,7 @@
         <el-date-picker
           v-model="accountAddInfo.keyBeginDate"
           type="datetime"
+           style="width: 190px"
           value-format="yyyy-MM-dd hh:mm:ss"
           placeholder="秘钥开始时间">
         </el-date-picker>
@@ -68,6 +69,7 @@
         <el-date-picker
           v-model="accountAddInfo.keyEndDate"
           type="datetime"
+           style="width: 190px"
           value-format="yyyy-MM-dd hh:mm:ss"
           placeholder="秘钥结束时间">
         </el-date-picker>
@@ -75,12 +77,12 @@
     </el-col>
     <el-col :span="12">
       <el-form-item label="邮箱" prop="email">
-        <el-input v-model="accountAddInfo.email"></el-input>
+        <el-input v-model="accountAddInfo.email" style="width: 190px"></el-input>
       </el-form-item>
     </el-col>
     <el-col :span="12">
       <el-form-item label="备注信息">
-        <el-input v-model="accountAddInfo.note"></el-input>
+        <el-input v-model="accountAddInfo.note" style="width: 190px"></el-input>
       </el-form-item>
     </el-col>
   </el-form>
@@ -110,6 +112,12 @@
         }
         callback()
       }
+      const userKey = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('秘钥不能为空'))
+        }
+        callback()
+      }
       const email = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('邮箱不能为空'))
@@ -130,6 +138,7 @@
         },
         accountAddRule: {
           loginNo: [{ validator: loginNo, trigger: 'blur', required: true }],
+          userKey: [{ validator: userKey, trigger: 'blur', required: true }],
           loginPwd: [{ validator: loginPwd, trigger: 'blur', required: true }],
           email: [
             { validator: email, trigger: 'blur', required: true },

@@ -107,10 +107,10 @@ export function deleteCustom(userId) {
 // 查询权限列表
 export function getAuthorityList(param) {
   return request({
-    url: '/system/role/query',
+    url: '/customer/privilege/query',
     method: 'get',
     params: {
-      roleStatus: param.roleStatus,
+      specInfoName: param.specInfoName,
       pageNum: param.pageNum,
       pageSize: param.pageSize
     }
@@ -120,7 +120,7 @@ export function getAuthorityList(param) {
 // 新增权限
 export function createAuthority(param) {
   return request({
-    url: '/system/role/add',
+    url: '/customer/privilege/add',
     method: 'post',
     data: param,
     transformRequest: [function(data) {
@@ -133,7 +133,7 @@ export function createAuthority(param) {
 // 修改权限
 export function updateAuthority(param) {
   return request({
-    url: '/system/role/update',
+    url: '/customer/privilege/update',
     method: 'post',
     data: param,
     transformRequest: [function(data) {
@@ -144,12 +144,12 @@ export function updateAuthority(param) {
 }
 
 // 删除权限
-export function deleteAuthority(roleId) {
+export function deleteAuthority(userSpecModeId) {
   const param = {
-    roleId: roleId
+    userSpecModeId: userSpecModeId
   }
   return request({
-    url: '/system/role/delete',
+    url: '/customer/privilege/delete',
     method: 'post',
     data: param,
     transformRequest: [function(data) {
@@ -159,24 +159,45 @@ export function deleteAuthority(roleId) {
   })
 }
 
-// 权限重复性查询
-export function checkRepeatForAuthority(roleName) {
+// 查询权限详情
+export function queryAuthority(param) {
   return request({
-    url: '/system/role/checkRepeat',
+    url: '/customer/privilege/view',
     method: 'get',
     params: {
-      roleName: roleName
+      customerId: param.customerId,
+      userSpecModeId: param.userSpecModeId
     }
   })
 }
 
-// 查询权限详情
-export function queryAuthority(roleId) {
+// 获取文件类型，产品列表
+export function getAuthorityParams() {
   return request({
-    url: '/system/role/view',
+    url: '/customer/privilege/params',
+    method: 'get',
+    params: {}
+  })
+}
+
+// 查询产品类型和模式值域
+export function getSpecTypeParamsForPro() {
+  return request({
+    url: '/customer/privilege/getSpecType',
+    method: 'get',
+    params: {}
+  })
+}
+
+// 检查客户权限已配置
+export function checkRepeatForAuthority(param) {
+  return request({
+    url: '/customer/privilege/checkRepeat',
     method: 'get',
     params: {
-      roleId: roleId
+      specInfoId: param.specInfoId,
+      customerId: param.customerId,
+      userSpecModeId: param.userSpecModeId
     }
   })
 }

@@ -46,3 +46,19 @@ $simpleGrayBoxShadow: inset 0 0 5px rgba(0,0,0,0.2);
   border-radius: 0;
   background: rgba(0,0,0,0.1);
 }
+.text-href {
+  cursor: pointer;
+  color: #3888fa;
+  font-weight: bold;
+  text-decoration-line: inherit;
+  transition: all .3s;
+  &:hover {
+    color: #009a61;
+    text-decoration: underline;
+  }
+}
+.icon-hide {
+  .el-icon-arrow-down {
+    display: none;
+  }
+}
