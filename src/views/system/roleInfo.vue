@@ -15,7 +15,7 @@
         {{roleInfo.note}}
       </el-form-item>
     </el-col>
-    <el-col :span="24">
+    <el-col :span="24" v-loading="loading">
       <ul class="role-table col-xs-offset-2 col-md-offset-1 col-sm-offset-2">
           <li class="header">
               <div class="left">菜单列表</div>
@@ -79,6 +79,7 @@
           label: 'moduleName',
           disabled: 'disabled'
         },
+        loading: false,
         selectModuleData: []
       }
     },
@@ -134,6 +135,7 @@
       },
       // 获取模块权限
       getModules() {
+        this.loading = true
         this.$store.dispatch('GetModules').then(data => {
           this.moduleData = data
           const originModule = this.roleInfo.roleModules
@@ -157,6 +159,7 @@
             }
           }
           this.refreshModuleTree()
+          this.loading = false
         })
       },
       // 选择树节点
