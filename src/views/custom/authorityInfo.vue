@@ -1,6 +1,7 @@
 <template>
   <el-form ref="authorityInfoForm" label-width="100px" label-suffix=":">
-    <el-card class="box-card" v-for="item in authorityList" :key="item.userSpecModeId">
+    <div v-if="!authorityList.length" style="text-align: center;">无数据</div>
+    <el-card class="box-card" v-if="authorityList.length" v-for="item in authorityList" :key="item.userSpecModeId">
       <el-col :span="12">
         <el-form-item label="登录账号">
           {{item.customerName}}
