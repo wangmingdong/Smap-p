@@ -3,7 +3,7 @@
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(item,index)  in levelList" :key="item.path" v-if="item.meta.title">
         <span v-if="item.redirect==='noredirect'||index==levelList.length-1" class="no-redirect">{{item.meta.title}}</span>
-        <router-link v-else :to="item.redirect||item.path">{{item.meta.title}}</router-link>
+        <router-link v-else :to="item.redirect||item.path" @click.native="flushRouter">{{item.meta.title}}</router-link>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -20,7 +20,7 @@ export default {
     }
   },
   watch: {
-    $route() {
+    $route(to, from) {
       this.getBreadcrumb()
     }
   },
@@ -33,6 +33,14 @@ export default {
       //   matched = [{ path: '/dashboard', meta: { title: '主页' }}].concat(matched)
       // }
       this.levelList = matched
+    },
+    flushRouter() {
+      const oldRouter = this.$router.history.pending
+      // const newRouter = this.$router.history.current
+      // 如果没有oldRouter，说明url不变
+      if (!oldRouter) {
+        this.$router.go(0)
+      }
     }
   }
 }

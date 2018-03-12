@@ -179,13 +179,20 @@ export default {
     },
     // 打开增加权限
     addAuthority() {
-      this.authorityAddModal = true
+      this.$store.dispatch('QueryCustom', this.$route.params.id).then(data => {
+        this.addAuthorityInfo.customerName = data.loginNo
+        this.addAuthorityInfo.customerId = this.$route.params.id
+        this.authorityAddModal = true
+      })
     },
     // 打开修改权限
     openUpdateAuthority() {
       if (this.multipleSelection.length === 1) {
         this.$store.dispatch('QueryAuthority', { userSpecModeId: this.multipleSelection[0].userSpecModeId }).then(data => {
           this.editAuthorityInfo = data[0]
+          if (this.$refs.authorityUpdateComponent) {
+            this.$refs.authorityUpdateComponent.getParams()
+          }
           this.authorityUpdateModal = true
         })
       } else {

@@ -110,6 +110,7 @@ export function getAuthorityList(param) {
     url: '/customer/privilege/query',
     method: 'get',
     params: {
+      customerName: param.customerName,
       specInfoName: param.specInfoName,
       pageNum: param.pageNum,
       pageSize: param.pageSize

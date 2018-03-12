@@ -226,7 +226,6 @@ export default {
     },
     getParams() {
       this.$store.dispatch('GetParamsByCustom').then(data => {
-        console.log(data)
         this.customOptions = data
         this.userTypeOptions = this.customOptions.userType
         this.userType = this.userTypeOptions[0].id

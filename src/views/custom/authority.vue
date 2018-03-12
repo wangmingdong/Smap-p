@@ -3,9 +3,15 @@
     <div class="table-header-container">
       <div class="table-search-container">
         <div class="form-container">
+          <div class="form-label">登录账号：</div>
+          <div class="form-content">
+            <el-input placeholder="登录账号" v-model="searchUname" :clearable="true" v-on:change="queryData"></el-input>
+          </div>
+        </div>
+        <div class="form-container">
           <div class="form-label">产品名称：</div>
           <div class="form-content">
-            <el-input placeholder="搜索内容" v-model="searchText" :clearable="true" v-on:change="queryData"></el-input>
+            <el-input placeholder="产品名称" v-model="searchText" :clearable="true" v-on:change="queryData"></el-input>
           </div>
         </div>
       </div>
@@ -105,6 +111,7 @@ export default {
       currentPage: 1,
       pageSize: 20,
       dataTotal: 0,
+      searchUname: '',
       searchText: '',
       uNameStatus: 1,
       addAuthorityInfo: {
@@ -166,6 +173,7 @@ export default {
     queryData() {
       this.listLoading = true
       const param = {
+        customerName: this.searchUname,
         specInfoName: this.searchText,
         pageNum: this.currentPage,
         pageSize: this.pageSize

@@ -29,7 +29,6 @@
         </el-select>
       </el-form-item>
     </el-col>
-    {{authorityAddInfo.userSpecModeId}}
   </el-form>
 </template>
 <script>

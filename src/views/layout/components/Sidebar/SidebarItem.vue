@@ -19,7 +19,7 @@
             <sidebar-item :is-nest="true" class="nest-menu" v-if="child.children&&child.children.length>0" :routes="[child]" :key="child.path"></sidebar-item>
 
             <router-link v-else :to="item.path+'/'+child.path" :key="child.name">
-              <el-menu-item :index="item.path+'/'+child.path" @click="selectMenu(child.meta.moduleId)">
+              <el-menu-item :index="item.path+'/'+child.path" @click="selectMenu(child.meta.moduleId, child)">
                 <svg-icon v-if="child.meta&&child.meta.icon" :icon-class="child.meta.icon"></svg-icon>
                 <span v-if="child.meta&&child.meta.title">{{child.meta.title}}</span>
               </el-menu-item>
@@ -49,7 +49,12 @@ export default {
     }
   },
   methods: {
-    selectMenu(id) {
+    selectMenu(id, item) {
+      const oldRouter = this.$router.history.current
+      // 如果没有oldRouter，说明url不变
+      if (oldRouter.name === item.name) {
+        this.$router.go(0)
+      }
       this.$store.dispatch('GetModuleAuthority', id).then(() => {
         // this.sideLoading = false
       }).catch(() => {
@@ -99,7 +104,8 @@ export default {
       this.sideLoading = false
     })
     // 刷新页面，查询按钮权限
-    this.selectMenu(this.$router.history.current.meta.moduleId)
+    // this.selectMenu(this.$router.history.current.meta.moduleId)
+    this.$store.dispatch('GetModuleAuthority', this.$router.history.current.meta.moduleId)
   }
 }
 </script>
